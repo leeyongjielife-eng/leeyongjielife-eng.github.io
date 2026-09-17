@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f2ed" />
+    <meta name="description" content="Wingkit — an editorial portfolio of AI workflows, applications, and personal experiments." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <title>WINGKIT — AI workflows & things I can use</title>
+    <style>
+      :root {
+        --paper: #f5f2ed;
+        --paper-deep: #ebe6de;
+        --ink: #1e1d1b;
+        --muted: #76716a;
+        --line: rgba(30, 29, 27, 0.18);
+        --line-soft: rgba(30, 29, 27, 0.09);
+        --warm: #b06d43;
+        --serif: "Iowan Old Style", "Baskerville", "Times New Roman", serif;
+        --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { height: 100%; overflow: hidden; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55; overscroll-behavior: none; }
+      body.modal-open { overflow: hidden; }
+      a { color: inherit; text-decoration: none; }
+      button { color: inherit; font: inherit; }
+      img { display: block; max-width: 100%; }
+      ::selection { background: var(--ink); color: var(--paper); }
+
+      .site-shell { height: 100vh; overflow: hidden; width: min(1440px, calc(100% - 72px)); margin: 0 auto; }
+      .eyebrow { color: var(--muted); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+      .micro { color: var(--muted); font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; }
+      .serif { font-family: var(--serif); }
+      .rule { height: 1px; background: var(--line); }
+
+      header { align-items: center; display: flex; justify-content: space-between; left: max(36px, calc((100vw - min(1440px, calc(100vw - 72px))) / 2)); padding: 26px 0; position: fixed; right: max(36px, calc((100vw - min(1440px, calc(100vw - 72px))) / 2)); top: 0; z-index: 15; }
+      .wordmark { font-size: 0.84rem; font-weight: 700; letter-spacing: 0.2em; }
+      nav { display: flex; gap: 26px; }
+      nav a { color: var(--muted); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 180ms ease; }
+      nav a:hover, nav a:focus-visible { color: var(--ink); }
+
+      .hero { min-height: calc(100vh - 84px); padding: 7vh 0 10vh; display: grid; grid-template-columns: 55% 45%; gap: 3.5vw; align-items: center; }
+      .hero-copy { padding: 0 0 4vh; }
+      .hero-kicker { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+      .hero-kicker::before { content: ""; width: 34px; height: 1px; background: var(--ink); }
+      .hero h1 { font-family: var(--serif); font-size: clamp(5.6rem, 14vw, 13rem); font-weight: 400; letter-spacing: -0.085em; line-height: 0.76; margin: 0; }
+      .hero h1 span { display: block; margin-left: 0.13em; margin-top: 0.08em; }
+      .hero-note { display: grid; grid-template-columns: 160px minmax(200px, 360px); gap: 22px; margin-top: 58px; }
+      .hero-note p { font-family: var(--serif); font-size: clamp(1.1rem, 1.7vw, 1.48rem); line-height: 1.23; margin: 0; }
+      .hero-index { align-self: end; color: var(--muted); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; }
+      .hero-index strong { color: var(--ink); display: block; font-family: var(--serif); font-size: 2.2rem; font-weight: 400; letter-spacing: -0.05em; line-height: 1; margin-top: 10px; }
+
+      .photo-collage { height: min(650px, 67vw); min-height: 480px; position: relative; }
+      .photo { border: 1px solid rgba(255,255,255,.82); box-shadow: 0 18px 35px rgba(48, 42, 35, .12); overflow: hidden; position: absolute; transition: transform 380ms cubic-bezier(.2,.7,.2,1), box-shadow 380ms ease; }
+      .photo img { height: 100%; object-fit: cover; width: 100%; }
+      .photo:hover { box-shadow: 0 24px 45px rgba(48, 42, 35, .18); z-index: 4; }
+      .photo.is-picked { box-shadow: 0 28px 52px rgba(48, 42, 35, .24); transform: translateY(-16px) rotate(var(--picked-angle)) scale(1.045); z-index: 8; }
+      .photo-1 { height: 45%; left: 0; top: 5%; transform: rotate(-5deg); width: 33%; }
+      .photo-2 { height: 38%; left: 18%; top: 49%; transform: rotate(3deg); width: 30%; }
+      .photo-3 { height: 58%; left: 34%; top: 0; transform: rotate(2deg); width: 34%; }
+      .photo-4 { height: 53%; right: 0; top: 9%; transform: rotate(5deg); width: 31%; }
+      .photo-5 { bottom: 3%; height: 43%; right: 4%; transform: rotate(-4deg); width: 31%; }
+      .photo-6 { bottom: 4%; height: 34%; left: 46%; transform: rotate(-1deg); width: 25%; }
+      .photo:hover { transform: translateY(-6px) rotate(0deg) scale(1.02); }
+      .collage-caption { bottom: 0; color: var(--muted); font-size: 0.67rem; letter-spacing: 0.14em; position: absolute; right: 0; text-transform: uppercase; }
+
+      main { height: 100%; position: relative; }
+      main > section { height: 100%; inset: 0; min-height: 100%; opacity: 0; overflow: hidden; padding: 9rem 0 5rem; pointer-events: none; position: absolute; transform: translateY(28px); transition: opacity 420ms ease, transform 520ms cubic-bezier(.2,.7,.2,1); visibility: hidden; }
+      main > section.is-page-active { opacity: 1; pointer-events: auto; transform: none; visibility: visible; }
+      section { padding: 10rem 0; }
+      .section-head { align-items: end; display: flex; justify-content: space-between; margin-bottom: 62px; }
+      .section-head h2 { font-family: var(--serif); font-size: clamp(3rem, 6vw, 6.2rem); font-weight: 400; letter-spacing: -0.065em; line-height: .9; margin: 0; }
+      .section-head p { color: var(--muted); margin: 0; max-width: 270px; }
+
+      .about-grid { display: grid; grid-template-columns: minmax(220px, 0.8fr) 1.8fr; gap: 8vw; }
+      .tab-list { align-self: start; display: grid; gap: 12px; position: sticky; top: 30px; }
+      .tab-button { background: transparent; border: 0; border-bottom: 1px solid var(--line-soft); cursor: pointer; padding: 17px 0; text-align: left; transition: color 180ms ease, padding 180ms ease; }
+      .tab-button::before { color: var(--muted); content: "—"; display: inline-block; margin-right: 14px; transition: transform 180ms ease; }
+      .tab-button[aria-selected="true"] { font-weight: 600; }
+      .tab-button[aria-selected="true"]::before { color: var(--warm); transform: translateX(6px); }
+      .tab-panel { min-height: 330px; }
+      .tab-panel[hidden] { display: none; }
+      .tab-panel h3 { font-family: var(--serif); font-size: clamp(2.5rem, 4.5vw, 4.9rem); font-weight: 400; letter-spacing: -0.06em; line-height: .95; margin: 0 0 32px; max-width: 760px; }
+      .tab-panel > p { font-size: 1.06rem; max-width: 620px; }
+      .care-layout { display: grid; grid-template-columns: minmax(180px, .55fr) 1.45fr; gap: 5vw; align-items: center; }
+      .care-list { border-top: 1px solid var(--line); display: grid; }
+      .care-choice { align-items: center; background: transparent; border: 0; border-bottom: 1px solid var(--line-soft); cursor: pointer; display: flex; justify-content: space-between; padding: 16px 0; text-align: left; }
+      .care-choice[aria-selected="true"] { font-weight: 700; }
+      .care-choice[aria-selected="true"]::before { color: var(--warm); content: "→"; margin-right: 10px; }
+      .care-choice span:last-child { color: var(--muted); font-size: .72rem; }
+      .care-content { min-height: 330px; }
+      .care-content h3 { font-family: var(--serif); font-size: clamp(2.5rem, 4.5vw, 4.9rem); font-weight: 400; letter-spacing: -.06em; line-height: .95; margin: 0 0 24px; max-width: 760px; }
+      .care-content p { font-size: 1.06rem; max-width: 620px; }
+      .care-content-panel[hidden] { display: none; }
+      .care-content-panel .bird-placeholder { float: right; margin: 0 0 18px 28px; max-width: 180px; width: 30%; }
+      .bird-placeholder { align-items: center; aspect-ratio: 1; background: var(--paper-deep); border: 1px solid var(--line); color: var(--muted); display: flex; font-size: .68rem; letter-spacing: .12em; justify-content: center; text-align: center; text-transform: uppercase; }
+      .timeline { display: grid; gap: 24px; max-width: 760px; }
+      .timeline-item { border-top: 1px solid var(--line); display: grid; gap: 22px; grid-template-columns: 130px 1fr; padding-top: 16px; }
+      .timeline-item p { margin: 0; }
+      .timeline-item strong { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; }
+      .resume-panel { border-top: 1px solid var(--line); padding-top: 22px; max-width: 660px; }
+      .resume-panel .resume-line { display: flex; gap: 16px; justify-content: space-between; padding: 16px 0; }
+      .button-link, .text-link { align-items: center; border-bottom: 1px solid var(--ink); display: inline-flex; gap: 10px; padding-bottom: 5px; }
+      .button-link { cursor: pointer; margin-top: 28px; }
+      .button-link.is-pending { border-bottom-color: var(--muted); color: var(--muted); cursor: default; }
+
+      .projects-section { background: var(--paper-deep); margin-left: calc((100vw - min(1440px, calc(100vw - 72px))) / -2); margin-right: calc((100vw - min(1440px, calc(100vw - 72px))) / -2); padding-left: max(36px, calc((100vw - min(1440px, calc(100vw - 72px))) / 2)); padding-right: max(36px, calc((100vw - min(1440px, calc(100vw - 72px))) / 2)); }
+      #projects[data-screen="skills"] .section-head, #projects[data-screen="skills"] .project-duo, #projects[data-screen="skills"] .little-subsection, #projects[data-screen="little"] .section-head, #projects[data-screen="little"] .project-duo, #projects[data-screen="little"] .skills-subsection, #projects[data-screen="main"] .subsection { display: none; }
+      #projects[data-screen="skills"] .skills-subsection, #projects[data-screen="little"] .little-subsection { display: block; }
+      .project-duo { display: grid; gap: clamp(34px, 5vw, 92px); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .main-project { display: grid; gap: 24px; }
+      .project-visual { align-items: center; aspect-ratio: 1.22; background: #ded8cf; border: 1px solid var(--line); display: flex; justify-content: center; overflow: hidden; padding: 7%; position: relative; }
+      .laptop { background: #22201d; border: 8px solid #332f2a; border-radius: 10px 10px 4px 4px; box-shadow: 0 16px 26px rgba(30,29,27,.2); height: 75%; overflow: hidden; position: relative; width: 86%; }
+      .laptop::after { background: #332f2a; border-radius: 0 0 16px 16px; bottom: -14%; content: ""; height: 12%; left: -7%; position: absolute; width: 114%; }
+      .laptop-screen { background: var(--paper); height: 100%; overflow: hidden; padding: 12px; }
+      .laptop-screen .screen-bar { border-bottom: 1px solid var(--line); color: var(--muted); display: flex; font-size: .52rem; justify-content: space-between; letter-spacing: .08em; padding-bottom: 8px; text-transform: uppercase; }
+      .laptop-screen .screen-title { font-family: var(--serif); font-size: clamp(1.1rem, 2.2vw, 2.1rem); line-height: .95; margin-top: 18%; }
+      .laptop-screen .screen-lines { border-top: 1px solid var(--line); margin-top: 18px; }
+      .laptop-screen .screen-lines span { border-bottom: 1px solid var(--line-soft); display: block; font-size: .55rem; padding: 7px 0; }
+      .project-visual::after { color: rgba(30,29,27,.5); content: "INTERACTIVE PREVIEW"; font-size: .68rem; left: 24px; letter-spacing: .14em; position: absolute; top: 24px; }
+      .project-visual .cover-mark { bottom: 24px; font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 5rem); left: 24px; letter-spacing: -.06em; line-height: .9; position: absolute; }
+      .project-meta { align-items: start; display: grid; grid-template-columns: 46px 1fr; }
+      .project-meta .number { font-family: var(--serif); font-size: 1.8rem; line-height: 1; }
+      .project-meta h3 { font-family: var(--serif); font-size: clamp(2rem, 3vw, 3.3rem); font-weight: 400; letter-spacing: -.05em; line-height: .95; margin: 0 0 12px; }
+      .project-meta p { color: var(--muted); margin: 0; max-width: 430px; }
+      .project-meta .text-link { margin-top: 22px; }
+
+      .subsection { margin-top: 130px; }
+      .subsection-title { align-items: center; display: flex; gap: 16px; margin-bottom: 22px; }
+      .subsection-title h3 { font-size: .78rem; letter-spacing: .14em; margin: 0; text-transform: uppercase; }
+      .subsection-title .rule { flex: 1; }
+      .workflow-list { display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); }
+      .workflow-item { align-items: start; background: var(--paper); border: 1px solid var(--line); cursor: pointer; display: grid; gap: 16px; grid-template-columns: 30px 1fr auto; min-height: 190px; padding: 22px; text-align: left; transition: background 220ms ease, transform 220ms ease; }
+      .workflow-item:hover { background: #fffdf9; transform: translateY(-5px); }
+      .workflow-item .idx { color: var(--muted); font-size: .75rem; }
+      .workflow-item h4 { font-family: var(--serif); font-size: clamp(1.45rem, 2.5vw, 2.5rem); font-weight: 400; letter-spacing: -.045em; line-height: 1; margin: 0; }
+      .workflow-item .arrow { color: var(--muted); font-size: 1.2rem; }
+      .little-grid { display: grid; gap: 18px; grid-template-columns: 1.1fr .9fr 1.3fr; }
+      .little-card { background: var(--paper); border: 1px solid var(--line); cursor: pointer; min-height: 230px; padding: 24px; position: relative; transition: transform 220ms ease, background 220ms ease; }
+      .little-card:nth-child(2) { transform: translateY(42px); }
+      .little-card:hover { background: #fffdf9; transform: translateY(-5px); }
+      .little-card:nth-child(2):hover { transform: translateY(37px); }
+      .little-card h4 { font-family: var(--serif); font-size: 2.25rem; font-weight: 400; letter-spacing: -.055em; line-height: .94; margin: 50px 0 18px; max-width: 250px; }
+      .little-card p { color: var(--muted); font-size: .9rem; max-width: 280px; }
+      .little-card .card-index { color: var(--muted); font-size: .72rem; letter-spacing: .12em; }
+
+      .social-layout { display: grid; grid-template-columns: minmax(260px, .8fr) 1.2fr; gap: 8vw; align-items: center; }
+      .page-rail { align-items: center; bottom: 30px; display: flex; gap: 14px; position: fixed; right: max(36px, calc((100vw - min(1440px, calc(100vw - 72px))) / 2)); z-index: 16; }
+      .page-rail button { background: transparent; border: 0; cursor: pointer; font-size: .8rem; padding: 5px; }
+      .page-rail .page-count { color: var(--muted); font-family: var(--serif); font-size: 1.05rem; min-width: 62px; text-align: center; }
+      .page-dots { display: flex; gap: 6px; }
+      .page-dot { background: var(--line); border-radius: 50%; height: 6px; padding: 0 !important; width: 6px; }
+      .page-dot.is-active { background: var(--warm); transform: scale(1.5); }
+      .page-hint { bottom: 32px; color: var(--muted); font-size: .68rem; left: max(36px, calc((100vw - min(1440px, calc(100vw - 72px))) / 2)); letter-spacing: .1em; position: fixed; text-transform: uppercase; z-index: 16; }
+      .social-copy h2 { font-family: var(--serif); font-size: clamp(3.5rem, 7vw, 7rem); font-weight: 400; letter-spacing: -.075em; line-height: .84; margin: 18px 0 28px; }
+      .social-copy p { color: var(--muted); max-width: 340px; }
+      .platform-list { border-top: 1px solid var(--line); margin-top: 40px; }
+      .platform-button { align-items: center; background: transparent; border: 0; border-bottom: 1px solid var(--line); cursor: pointer; display: flex; justify-content: space-between; padding: 15px 0; text-align: left; width: 100%; }
+      .platform-button span:last-child { color: var(--muted); font-size: .7rem; }
+      .platform-button[aria-selected="true"] { font-weight: 600; }
+      .platform-button[aria-selected="true"] span:last-child { color: var(--warm); }
+      .phone-stage { display: flex; justify-content: center; }
+      .phone { background: #1c1b19; border: 8px solid #292725; border-radius: 38px; box-shadow: 0 22px 50px rgba(30, 29, 27, .19); max-width: 310px; padding: 10px; transform: rotate(2deg); width: 100%; }
+      .phone-screen { background: #f7f3ec; border-radius: 25px; min-height: 540px; overflow: hidden; padding: 18px; }
+      .phone-top { align-items: center; display: flex; justify-content: space-between; margin-bottom: 40px; }
+      .phone-top .dot { background: var(--ink); border-radius: 50%; height: 7px; width: 7px; }
+      .social-preview { min-height: 360px; }
+      .social-preview .preview-label { color: var(--muted); font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; }
+      .social-preview h3 { font-family: var(--serif); font-size: 2.5rem; font-weight: 400; letter-spacing: -.06em; line-height: .92; margin: 14px 0 18px; }
+      .social-preview p { color: var(--muted); font-size: .92rem; }
+      .social-preview .preview-lines { border-top: 1px solid var(--line); margin-top: 44px; }
+      .social-preview .preview-lines div { border-bottom: 1px solid var(--line); padding: 12px 0; }
+      .social-open { border-bottom: 1px solid var(--ink); display: inline-block; font-size: .76rem; letter-spacing: .08em; margin-top: 30px; padding-bottom: 4px; text-transform: uppercase; }
+      .social-open.is-pending { border-bottom-color: var(--muted); color: var(--muted); }
+
+      footer { border-top: 1px solid var(--line); height: 100%; inset: 0; opacity: 0; padding: 12rem 0 5rem; pointer-events: none; position: absolute; transform: translateY(28px); transition: opacity 420ms ease, transform 520ms cubic-bezier(.2,.7,.2,1); visibility: hidden; }
+      footer.is-page-active { opacity: 1; pointer-events: auto; transform: none; visibility: visible; }
+      .footer-grid { align-items: end; display: flex; justify-content: space-between; }
+      .footer-grid h2 { font-family: var(--serif); font-size: clamp(3rem, 6vw, 6rem); font-weight: 400; letter-spacing: -.065em; line-height: .85; margin: 18px 0 0; }
+      .footer-links { display: grid; gap: 8px; text-align: right; }
+      .footer-links a { border-bottom: 1px solid var(--line); font-size: .85rem; padding-bottom: 3px; }
+      .footer-note { color: var(--muted); display: flex; justify-content: space-between; margin-top: 74px; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
+
+      .reveal { opacity: 0; transform: translateY(20px); transition: opacity 700ms ease, transform 700ms ease; }
+      .reveal.is-visible { opacity: 1; transform: none; }
+
+      .modal { align-items: center; background: rgba(20, 19, 17, .48); display: none; inset: 0; justify-content: center; padding: 24px; position: fixed; z-index: 20; }
+      .modal.is-open { display: flex; }
+      .modal-card { background: var(--paper); max-height: min(760px, 92vh); max-width: 720px; overflow: auto; padding: clamp(28px, 5vw, 60px); position: relative; width: 100%; }
+      .modal-close { background: transparent; border: 0; cursor: pointer; font-size: 1.5rem; position: absolute; right: 22px; top: 18px; }
+      .modal-card h2 { font-family: var(--serif); font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 400; letter-spacing: -.06em; line-height: .9; margin: 28px 0 34px; max-width: 570px; }
+      .detail-grid { display: grid; gap: 20px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .detail-block { border-top: 1px solid var(--line); padding-top: 12px; }
+      .detail-block h3 { font-size: .7rem; letter-spacing: .12em; margin: 0 0 8px; text-transform: uppercase; }
+      .detail-block p { margin: 0; }
+      .detail-wide { grid-column: 1 / -1; }
+
+      /* Reference-led About composition: one quiet canvas, two clear reading zones. */
+      #about { min-height: calc(100vh - 72px); overflow: hidden; position: relative; }
+      #about .section-head { display: grid; grid-template-columns: minmax(390px, .92fr) minmax(300px, .68fr); gap: 7vw; margin-bottom: 78px; position: relative; z-index: 3; }
+      #about .section-head h2 { font-size: clamp(5.4rem, 9.7vw, 10.8rem); line-height: .76; max-width: 590px; }
+      #about .section-head p { font-size: clamp(1.05rem, 1.45vw, 1.35rem); line-height: 1.42; max-width: 470px; padding-top: 4px; }
+      #about .about-grid { display: grid; grid-template-columns: minmax(300px, .72fr) minmax(640px, 1.5fr); gap: 7vw; min-height: 470px; position: relative; z-index: 3; }
+      #about .tab-list { gap: 0; padding-top: 4px; position: relative; z-index: 4; }
+      #about .tab-button { border-bottom-color: rgba(248,248,246,.18); font-size: 1rem; font-weight: 700; letter-spacing: .02em; padding: 18px 8px; }
+      #about .tab-button:first-child { border-top: 1px solid rgba(248,248,246,.18); }
+      #about .tab-button::before { color: rgba(248,248,246,.46); font-size: 1.2rem; margin-right: 14px; }
+      #about .tab-button[aria-selected="true"]::before { color: #ff9a00; }
+      #about .care-layout { align-items: start; grid-template-columns: minmax(280px, .62fr) minmax(410px, 1.38fr); gap: 5vw; }
+      #about .care-list { margin-top: 4px; position: relative; z-index: 4; }
+      #about .care-choice { font-size: 1rem; padding: 17px 2px; }
+      #about .care-choice[aria-selected="true"] { font-weight: 700; }
+      #about .care-choice[aria-selected="true"]::before { color: #ff9a00; content: "→"; margin-right: 12px; }
+      #about .care-content { min-height: 430px; position: relative; z-index: 3; }
+      #about .care-content-panel { min-height: 430px; position: relative; }
+      #about .care-content-panel h3 { font-size: clamp(4rem, 6vw, 7.6rem); line-height: .78; margin: 62px 0 34px; max-width: 610px; position: relative; z-index: 2; }
+      #about .care-content-panel p { font-size: 1.05rem; line-height: 1.55; margin-left: 0; max-width: 700px; position: relative; z-index: 3; }
+      #about .care-content-panel .bird-placeholder { float: none; margin: 0; max-width: none; position: absolute; right: 0; top: 0; width: clamp(170px, 18vw, 250px); z-index: 1; }
+      #about .care-content-panel .bird-placeholder::before { border: 1px solid rgba(248,248,246,.16); content: ""; inset: 12px; position: absolute; }
+      #about .about-scribble { height: 760px; left: 29%; pointer-events: none; position: absolute; top: 92px; width: 73%; z-index: 1; }
+      #about .about-scribble path { fill: none; stroke: #ff9a00; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.6; }
+      #about .about-scribble .fine { stroke-width: 1.8; }
+
+      @media (max-width: 900px) {
+        .site-shell { width: min(100% - 36px, 720px); }
+        header { left: 18px; padding: 20px 0; right: 18px; }
+        nav { gap: 14px; }
+        nav a { font-size: .68rem; }
+        main > section, footer { overflow-y: auto; padding: 7rem 0 5.5rem; }
+        .hero { display: flex; flex-direction: column; min-height: auto; padding: 11vh 0 8vh; }
+        .hero-copy { width: 100%; }
+        .hero h1 { font-size: clamp(5.2rem, 19vw, 9rem); }
+        .hero-note { grid-template-columns: 1fr; gap: 16px; margin-top: 42px; }
+        .photo-collage { height: 112vw; max-height: 650px; min-height: 480px; width: 100%; }
+        section { padding: 7rem 0; }
+        .section-head { align-items: start; flex-direction: column; gap: 24px; margin-bottom: 40px; }
+        .about-grid, .social-layout { gap: 46px; grid-template-columns: 1fr; }
+        .care-layout { grid-template-columns: 1fr; }
+        .tab-list { position: static; }
+        .tab-panel { min-height: auto; }
+        .projects-section { margin-left: -18px; margin-right: -18px; padding-left: 18px; padding-right: 18px; }
+        .project-duo { grid-template-columns: 1fr; }
+        .workflow-list { grid-template-columns: 1fr; }
+        .little-grid { grid-template-columns: 1fr; }
+        .little-card:nth-child(2) { transform: none; }
+        .little-card:nth-child(2):hover { transform: translateY(-5px); }
+        .phone-stage { justify-content: flex-start; padding-top: 12px; }
+        .footer-grid { align-items: start; flex-direction: column; gap: 34px; }
+        .footer-links { text-align: left; }
+      }
+
+      @media (max-width: 520px) {
+        nav { gap: 9px; }
+        nav a:nth-child(3) { display: none; }
+        .hero h1 { font-size: clamp(4.25rem, 20vw, 6.5rem); }
+        .photo-collage { min-height: 420px; }
+        .photo-1 { width: 37%; }
+        .photo-2 { left: 12%; width: 34%; }
+        .photo-3 { left: 31%; width: 37%; }
+        .photo-4 { width: 34%; }
+        .photo-5 { width: 35%; }
+        .photo-6 { left: 42%; width: 28%; }
+        .care-layout { grid-template-columns: 1fr; }
+        .bird-placeholder { max-width: 190px; }
+        .timeline-item { grid-template-columns: 1fr; gap: 6px; }
+        .detail-grid { grid-template-columns: 1fr; }
+        .detail-wide { grid-column: auto; }
+      }
+    </style>
+    <style id="video-layout-overrides">
+      html, body { height: auto; overflow: auto; }
+      body { background: #f8f8f6; color: #171717; }
+      .site-shell { height: auto; overflow: visible; width: min(1320px, calc(100% - 96px)); }
+      header { background: rgba(248,248,246,.94); border-bottom: 1px solid rgba(23,23,23,.14); left: auto; padding: 22px 0; position: sticky; right: auto; top: 0; }
+      .wordmark { font-size: 1rem; letter-spacing: .12em; }
+      nav { gap: 30px; }
+      nav a { font-size: .72rem; letter-spacing: .12em; }
+      main { height: auto; position: static; }
+      main > section { height: auto; inset: auto; min-height: auto; opacity: 1; overflow: visible; padding: clamp(88px, 12vw, 168px) 0; pointer-events: auto; position: relative; transform: none; transition: none; visibility: visible; }
+      main > section.is-page-active { opacity: 1; transform: none; visibility: visible; }
+      .hero { align-items: center; gap: clamp(44px, 7vw, 110px); grid-template-columns: .78fr 1.22fr; min-height: calc(100vh - 72px); padding: clamp(84px, 10vw, 140px) 0; }
+      .hero-copy { padding: 0; }
+      .hero-kicker { font-size: .68rem; letter-spacing: .14em; margin-bottom: 28px; }
+      .hero h1 { font-size: clamp(5.5rem, 12vw, 11.5rem); letter-spacing: -.1em; line-height: .78; }
+      .hero-note { display: block; margin-top: 46px; }
+      .hero-index { margin-bottom: 20px; }
+      .hero-index strong { display: inline; font-size: 1.2rem; margin: 0 0 0 10px; }
+      .hero-note p { font-size: clamp(1.15rem, 1.7vw, 1.55rem); max-width: 430px; }
+      .photo-collage { height: min(560px, 42vw); min-height: 460px; }
+      .photo { box-shadow: 0 14px 30px rgba(0,0,0,.13); }
+      .photo-collage .photo:hover { transform: translateY(-8px) rotate(0deg) scale(1.025); }
+      .section-head { align-items: start; border-top: 1px solid rgba(23,23,23,.2); margin-bottom: 64px; padding-top: 20px; }
+      .section-head h2 { font-size: clamp(3.2rem, 7vw, 7.8rem); line-height: .82; }
+      .section-head p { font-size: .98rem; line-height: 1.6; max-width: 320px; }
+      #about { background: #171717; color: #f8f8f6; margin-left: calc((100vw - min(1320px, calc(100vw - 96px))) / -2); margin-right: calc((100vw - min(1320px, calc(100vw - 96px))) / -2); padding-left: max(48px, calc((100vw - min(1320px, calc(100vw - 96px))) / 2)); padding-right: max(48px, calc((100vw - min(1320px, calc(100vw - 96px))) / 2)); }
+      #about .section-head { border-color: rgba(248,248,246,.22); }
+      #about .section-head p, #about .eyebrow, #about .micro { color: rgba(248,248,246,.58); }
+      #about .tab-button { border-color: rgba(248,248,246,.16); color: rgba(248,248,246,.66); }
+      #about .tab-button[aria-selected="true"] { color: #f8f8f6; }
+      #about .tab-button[aria-selected="true"]::before { color: #db8060; }
+      #about .care-list, #about .timeline-item, #about .resume-panel { border-color: rgba(248,248,246,.22); }
+      #about .care-choice { border-color: rgba(248,248,246,.16); color: rgba(248,248,246,.7); }
+      #about .care-choice[aria-selected="true"] { color: #f8f8f6; }
+      #about .care-content h3, #about .tab-panel h3 { color: #f8f8f6; }
+      .care-content-panel .bird-placeholder { background: #262626; border-color: rgba(248,248,246,.2); }
+      #projects { background: #f0f0ed; margin-left: calc((100vw - min(1320px, calc(100vw - 96px))) / -2); margin-right: calc((100vw - min(1320px, calc(100vw - 96px))) / -2); padding-left: max(48px, calc((100vw - min(1320px, calc(100vw - 96px))) / 2)); padding-right: max(48px, calc((100vw - min(1320px, calc(100vw - 96px))) / 2)); }
+      #projects[data-screen] .subsection, #projects[data-screen] .section-head, #projects[data-screen] .project-duo { display: block; }
+      .project-duo { gap: clamp(78px, 12vw, 180px); grid-template-columns: 1fr; }
+      .main-project { align-items: center; gap: clamp(32px, 6vw, 86px); grid-template-columns: 1.35fr .65fr; }
+      .main-project:nth-child(even) { grid-template-columns: .65fr 1.35fr; }
+      .main-project:nth-child(even) .project-visual { grid-column: 2; grid-row: 1; }
+      .main-project:nth-child(even) .project-meta { grid-column: 1; grid-row: 1; }
+      .project-visual { aspect-ratio: 1.42; background: #deded9; }
+      .project-meta { display: block; }
+      .project-meta .number { color: #777; font-size: 1rem; margin-bottom: 18px; }
+      .project-meta h3 { font-size: clamp(2.8rem, 5vw, 5.8rem); line-height: .86; margin-bottom: 22px; }
+      .project-meta p { font-size: 1rem; line-height: 1.65; }
+      .subsection { margin-top: clamp(110px, 16vw, 220px); }
+      .subsection-title { border-top: 1px solid rgba(23,23,23,.2); padding-top: 18px; }
+      .workflow-list { gap: 16px; grid-template-columns: repeat(3, 1fr); }
+      .workflow-item { min-height: 220px; padding: 26px; }
+      .workflow-item h4 { font-size: clamp(1.5rem, 2.5vw, 2.6rem); }
+      .little-grid { gap: 16px; grid-template-columns: repeat(3, 1fr); }
+      .little-card { min-height: 260px; padding: 26px; }
+      #social { background: #171717; color: #f8f8f6; margin-left: calc((100vw - min(1320px, calc(100vw - 96px))) / -2); margin-right: calc((100vw - min(1320px, calc(100vw - 96px))) / -2); padding-left: max(48px, calc((100vw - min(1320px, calc(100vw - 96px))) / 2)); padding-right: max(48px, calc((100vw - min(1320px, calc(100vw - 96px))) / 2)); }
+      #social .eyebrow, #social .social-copy p, #social .platform-button span:last-child { color: rgba(248,248,246,.6); }
+      #social .platform-list, #social .platform-button { border-color: rgba(248,248,246,.2); }
+      #social .platform-button { color: rgba(248,248,246,.7); }
+      #social .platform-button[aria-selected="true"] { color: #f8f8f6; }
+      #social .phone { transform: rotate(4deg); }
+      footer { background: #f8f8f6; border-top: 1px solid rgba(23,23,23,.18); height: auto; inset: auto; opacity: 1; padding: clamp(88px, 12vw, 160px) 0 48px; pointer-events: auto; position: relative; transform: none; visibility: visible; }
+      footer.is-page-active { opacity: 1; transform: none; visibility: visible; }
+      .page-hint, .page-rail { display: none; }
+      @media (max-width: 900px) {
+        .site-shell { width: min(100% - 36px, 720px); }
+        header { left: auto; padding: 18px 0; right: auto; }
+        nav { gap: 14px; }
+        .hero { display: flex; min-height: auto; }
+        .photo-collage { height: 112vw; max-height: 650px; min-height: 480px; }
+        .main-project, .main-project:nth-child(even) { display: grid; grid-template-columns: 1fr; }
+        .main-project:nth-child(even) .project-visual, .main-project:nth-child(even) .project-meta { grid-column: auto; grid-row: auto; }
+        .workflow-list, .little-grid { grid-template-columns: 1fr; }
+        #about, #projects, #social { margin-left: -18px; margin-right: -18px; padding-left: 18px; padding-right: 18px; }
+      }
+
+      @media (max-width: 900px) {
+        #about .section-head, #about .about-grid, #about .care-layout { grid-template-columns: 1fr; gap: 36px; }
+        #about .section-head { margin-bottom: 54px; }
+        #about .section-head h2 { font-size: clamp(4.8rem, 18vw, 8rem); }
+        #about .about-grid { min-height: 0; }
+        #about .care-content-panel h3 { font-size: clamp(3.5rem, 14vw, 6rem); margin-top: 32px; max-width: 520px; }
+        #about .care-content-panel .bird-placeholder { opacity: .86; width: 150px; }
+        #about .about-scribble { height: 660px; left: 13%; top: 285px; width: 110%; }
+      }
+    </style>
+    <style id="normal-scroll-override">
+      html { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; scroll-padding-top: 82px; }
+      body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; overscroll-behavior: auto; }
+      body.modal-open { overflow: hidden; }
+      .site-shell { height: auto; min-height: 100vh; overflow: visible; }
+      main { height: auto; min-height: 0; position: static; }
+      main > section { height: auto; inset: auto; min-height: 0; opacity: 1; overflow: visible; pointer-events: auto; position: relative; transform: none; visibility: visible; }
+      main > section.is-page-active { opacity: 1; pointer-events: auto; transform: none; visibility: visible; }
+      footer { height: auto; inset: auto; opacity: 1; overflow: visible; pointer-events: auto; position: relative; transform: none; visibility: visible; }
+      footer.is-page-active { opacity: 1; pointer-events: auto; transform: none; visibility: visible; }
+    </style>
+    <style id="filter-layout-overrides">
+      .tab-list, .filter-list, .platform-list {
+        backdrop-filter: blur(16px);
+        background: rgba(255,255,255,.035);
+        border: 1px solid rgba(255,255,255,.16);
+        padding: 10px 14px;
+      }
+      .tab-list { position: sticky; top: 104px; }
+      #about .tab-button { border-bottom-color: rgba(248,248,246,.13); }
+      #about .tab-button:first-child { border-top: 0; }
+      #about .tab-button[aria-selected="true"] { background: rgba(255,255,255,.06); }
+      .project-browser { align-items: start; display: grid; gap: clamp(34px, 6vw, 88px); grid-template-columns: minmax(220px, .55fr) minmax(0, 1.45fr); }
+      .project-filter { position: sticky; top: 104px; }
+      .filter-kicker { color: var(--muted); font-size: .7rem; letter-spacing: .14em; margin: 0 0 12px 2px; text-transform: uppercase; }
+      .filter-list { border-color: rgba(23,23,23,.16); background: rgba(255,255,255,.28); padding: 8px 12px; }
+      .filter-choice { align-items: center; background: transparent; border: 0; border-bottom: 1px solid rgba(23,23,23,.12); color: var(--muted); cursor: pointer; display: flex; font-size: .95rem; justify-content: space-between; padding: 17px 4px; text-align: left; width: 100%; }
+      .filter-choice:last-child { border-bottom: 0; }
+      .filter-choice span:last-child { font-size: .7rem; }
+      .filter-choice[aria-selected="true"] { color: var(--ink); font-weight: 700; }
+      .filter-choice[aria-selected="true"]::before { color: var(--warm); content: "→"; margin-right: 10px; }
+      .project-panel[hidden] { display: none; }
+      .text-link { background: transparent; border: 0; border-bottom: 1px solid currentColor; cursor: pointer; padding: 0 0 5px; }
+      .project-panel .main-project { min-height: 430px; }
+      .project-panel .subsection-title { margin-bottom: 18px; }
+      .panel-intro { color: var(--muted); margin: 0 0 28px; max-width: 440px; }
+      .resume-pdf-wrap { min-height: 720px; width: 100%; }
+      .resume-pdf { background: transparent; border: 0; display: block; height: min(82vh, 920px); min-height: 720px; width: 100%; }
+      .platform-account { margin-top: 46px; max-width: 620px; }
+      .platform-account p { color: rgba(248,248,246,.68); line-height: 1.65; margin: 12px 0 0; }
+      #social .social-layout { align-items: start; }
+      #social .platform-list { margin-top: 36px; }
+      #social .platform-button { padding: 17px 4px; }
+      #social .phone-stage { padding-top: 18px; }
+      #social .phone-screen { color: #171717; }
+      #social .phone-screen .micro, #social .phone-screen .preview-label, #social .phone-screen p { color: rgba(23,23,23,.68); }
+      #social .phone-screen .preview-lines { border-color: rgba(23,23,23,.18); }
+      #social .phone-screen .preview-lines div { border-color: rgba(23,23,23,.14); }
+      #social .phone-screen .social-open { border-color: #171717; color: #171717; }
+
+      @media (min-width: 641px) and (max-width: 900px) {
+        #about .section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(230px, .8fr); gap: 28px; }
+        #about .section-head h2 { font-size: clamp(4.5rem, 10vw, 7.5rem); }
+        #about .about-grid { grid-template-columns: minmax(210px, .78fr) minmax(0, 1.22fr); gap: 28px; }
+        #about .care-layout { grid-template-columns: minmax(130px, .72fr) minmax(0, 1.28fr); gap: 24px; }
+        #about .care-content-panel h3 { font-size: clamp(2.8rem, 6vw, 5.2rem); }
+        #about .care-content-panel .bird-placeholder { width: 130px; }
+        .project-browser { grid-template-columns: minmax(190px, .64fr) minmax(0, 1.36fr); gap: 28px; }
+        #projects .main-project { grid-template-columns: 1fr; }
+        #projects .project-panel .main-project { gap: 14px; }
+        #projects .project-panel .project-meta { margin-top: -18px; }
+        #projects .main-project .project-meta { display: grid; grid-template-columns: 42px 1fr; }
+        #projects .workflow-list, #projects .little-grid { grid-template-columns: 1fr; }
+        #social .social-layout { grid-template-columns: minmax(210px, .72fr) minmax(0, 1.28fr); gap: 28px; }
+        .resume-pdf-wrap, .resume-pdf { min-height: 640px; }
+        .resume-pdf { height: 78vh; }
+      }
+
+      @media (max-width: 640px) {
+        .tab-list, .project-filter { position: static; }
+        .project-browser { grid-template-columns: 1fr; }
+        #social .social-layout { grid-template-columns: 1fr; }
+      }
+
+      /* Keep the composition open: no boxed filters or card-like content blocks. */
+      .tab-list, .filter-list, .platform-list { backdrop-filter: none; background: transparent; border: 0; padding: 0; }
+      .tab-list { position: sticky; top: 104px; }
+      .filter-list { margin: 0; }
+      .filter-choice { border-bottom: 1px solid rgba(23,23,23,.18); padding-left: 0; padding-right: 0; }
+      .filter-choice:first-child { border-top: 1px solid rgba(23,23,23,.18); }
+      .filter-choice:last-child { border-bottom: 1px solid rgba(23,23,23,.18); }
+      #about .tab-button { background: transparent; border-bottom-color: rgba(248,248,246,.18); padding-left: 0; padding-right: 0; }
+      #about .tab-button[aria-selected="true"] { background: transparent; }
+      #about .care-layout { display: block; }
+      #about .care-bird-stack { height: clamp(390px, 42vw, 560px); margin: 0 auto; max-width: 620px; position: relative; width: 100%; }
+      #about .care-bird-photo { box-shadow: 0 16px 30px rgba(0,0,0,.22); cursor: pointer; margin: 0; overflow: hidden; position: absolute; transition: box-shadow 380ms ease, transform 380ms cubic-bezier(.2,.7,.2,1); }
+      #about .care-bird-photo img { height: 100%; object-fit: cover; width: 100%; }
+      #about .care-bird-photo-1 { height: 63%; left: 5%; top: 2%; transform: rotate(-7deg); width: 34%; }
+      #about .care-bird-photo-2 { height: 51%; left: 31%; top: 24%; transform: rotate(4deg); width: 43%; }
+      #about .care-bird-photo-3 { height: 48%; right: 2%; top: 0; transform: rotate(8deg); width: 38%; }
+      #about .care-bird-photo-4 { bottom: 2%; height: 53%; right: 9%; transform: rotate(-5deg); width: 42%; }
+      #about .care-bird-photo:hover, #about .care-bird-photo:focus-visible { box-shadow: 0 26px 44px rgba(0,0,0,.34); outline: 0; transform: translateY(-8px) rotate(0deg) scale(1.035); z-index: 9; }
+      #about .care-bird-photo.is-picked { box-shadow: 0 30px 52px rgba(0,0,0,.4); transform: translateY(-14px) rotate(var(--picked-angle)) scale(1.055); z-index: 10; }
+      #about .gaogao-label { align-items: flex-start; color: rgba(248,248,246,.58); display: flex; flex-direction: column; gap: 8px; left: 5%; pointer-events: none; position: absolute; top: -4%; transform: none; white-space: nowrap; z-index: 12; }
+      #about .gaogao-label span { font-size: clamp(3rem, 5vw, 4.8rem); letter-spacing: .08em; line-height: .84; }
+      #about .gaogao-label small { color: rgba(248,248,246,.5); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; }
+      #about .care-content, #about .care-content-panel { min-height: 0; }
+      #about .experience-profile { display: grid; gap: 18px; max-width: 760px; }
+      #about .experience-block { border-top: 1px solid rgba(248,248,246,.22); padding-top: 14px; }
+      #about .experience-block h4 { color: rgba(248,248,246,.58); font-size: .68rem; font-weight: 400; letter-spacing: .16em; margin: 0 0 8px; text-transform: uppercase; }
+      #about .experience-block p { color: rgba(248,248,246,.78); font-size: .94rem; line-height: 1.5; margin: 0; max-width: 740px; }
+      #about .experience-entry + .experience-entry { margin-top: 10px; }
+      #about .experience-entry strong { color: #f8f8f6; display: block; font-size: 1.08rem; font-weight: 400; line-height: 1.2; }
+      #about .experience-entry span { color: rgba(248,248,246,.62); display: block; font-size: .86rem; line-height: 1.4; margin-top: 3px; }
+      .project-visual { background: transparent; border: 0; padding: 0; }
+      .workflow-item, .little-card { background: transparent; border: 0; border-bottom: 1px solid rgba(23,23,23,.18); border-radius: 0; box-shadow: none; }
+      .workflow-item:first-child, .little-card:first-child { border-top: 1px solid rgba(23,23,23,.18); }
+      .workflow-item:hover, .little-card:hover { background: transparent; box-shadow: none; transform: none; }
+      .little-card:nth-child(2), .little-card:nth-child(2):hover { transform: none; }
+      .photo { border: 0; }
+      #social .platform-list { margin-top: 36px; }
+      #social .phone-stage { justify-content: flex-end; }
+      #social .phone { margin-right: 0; transform: rotate(4deg) translateX(-4%); }
+
+      #projects-title, #social-title { white-space: nowrap; }
+      #projects .panel-intro { margin: 0 0 12px; max-width: 560px; }
+      #projects #project-panel-skills .workflow-list { gap: 0; grid-template-columns: 1fr; }
+      #projects #project-panel-skills .workflow-item { grid-template-columns: 30px 1fr; min-height: 0; padding: 15px 0; }
+      #projects #project-panel-skills .workflow-item h4 { font-size: clamp(1.35rem, 2.5vw, 2.15rem); white-space: nowrap; }
+      #projects #project-panel-skills .workflow-item .arrow { display: none; }
+      #projects #project-panel-little .little-grid { gap: 0; grid-template-columns: 1fr; }
+      #projects #project-panel-little .little-card { min-height: 0; padding: 20px 0; }
+      #projects #project-panel-little .little-card h4 { margin: 12px 0 8px; }
+
+      .photo-2 { bottom: 3%; height: 34%; left: auto; right: 4%; top: auto; transform: rotate(-4deg); width: 26%; }
+      .photo-5 { bottom: auto; height: 38%; left: 18%; right: auto; top: 49%; transform: rotate(3deg); width: 30%; }
+      #about .care-bird-photo-1 { z-index: 2; }
+      #about .care-bird-photo-2 { bottom: 4%; height: 45%; left: 3%; top: auto; transform: rotate(4deg); width: 46%; z-index: 6; }
+      #about .care-bird-photo-3 { z-index: 3; }
+      #about .care-bird-photo-4 { z-index: 4; }
+
+      @media (max-width: 640px) {
+        .tab-list { position: static; }
+        #social .phone-stage { justify-content: flex-start; }
+        #social .phone { margin-right: 0; transform: rotate(4deg); }
+        #about .care-bird-stack { height: 540px; }
+        #about .gaogao-label { left: 3%; top: -3%; }
+        #about .gaogao-label span { font-size: 2.75rem; }
+        #about .gaogao-label small { font-size: .62rem; }
+        .resume-pdf-wrap, .resume-pdf { min-height: 680px; }
+        .resume-pdf { height: 760px; }
+        .photo-2 { height: 34%; width: 31%; }
+        .photo-5 { height: 36%; left: 14%; width: 34%; }
+        #projects #project-panel-skills .workflow-item h4 { font-size: 1.25rem; }
+      }
+
+      /* Filters stay airy and tactile: selection is expressed through motion and tone, not boxes or rules. */
+      .tab-list, .filter-list, .platform-list { display: grid; gap: 6px; }
+      .tab-button, .filter-choice, .platform-button { border: 0 !important; border-radius: 999px; box-shadow: none; gap: 8px; padding: 14px 10px !important; transition: color 180ms ease, filter 180ms ease, transform 180ms ease, background 180ms ease; }
+      .tab-button::before, .filter-choice::before { margin-right: 2px !important; }
+      .filter-choice span:last-child, .platform-button span:last-child { color: inherit; font-size: inherit; }
+      .filter-choice { justify-content: flex-start; }
+      .filter-choice[aria-selected="true"], .platform-button[aria-selected="true"], #about .tab-button[aria-selected="true"] { background: rgba(255,255,255,.08); filter: drop-shadow(0 8px 14px rgba(0,0,0,.12)); transform: translateX(7px) translateY(-1px); }
+      .filter-choice[aria-selected="true"]::before { content: "↗"; }
+      .filter-choice:hover, .platform-button:hover, #about .tab-button:hover { background: rgba(255,255,255,.045); transform: translateX(4px); }
+      .project-content { margin-top: -26px; }
+      #projects .project-panel .main-project { margin-top: 0; }
+      #about .section-head { display: block; }
+      #about .section-head > div { max-width: 720px; }
+      #about .section-head p { margin: 32px 0 0; max-width: 470px; padding-top: 0; }
+
+      @media (max-width: 640px) {
+        .project-content { margin-top: 0; }
+        .tab-button, .filter-choice, .platform-button { padding-left: 6px !important; padding-right: 6px !important; }
+        #about .section-head p { margin-top: 24px; }
+      }
+
+      /* A single classical typographic voice across the whole site. */
+      body, button, input, textarea, select { font-family: var(--serif); }
+      .tab-button::before { content: none !important; display: none; }
+      #about .tab-button { font-size: .95rem; font-weight: 400; gap: 0; letter-spacing: 0; text-transform: none; }
+      #about .tab-button[aria-selected="true"] { font-weight: 700; }
+      #projects #project-panel-little .little-grid { display: grid; gap: 0; grid-template-columns: 1fr; }
+      #projects #project-panel-little .little-card { align-items: baseline; column-gap: 24px; display: grid; grid-template-columns: minmax(110px, .25fr) minmax(0, 1fr); min-height: 0; padding: 16px 0; }
+      #projects #project-panel-little .little-card .card-index { grid-column: 1; grid-row: 1; }
+      #projects #project-panel-little .little-card h4 { grid-column: 2; grid-row: 1; margin: 0 0 6px; max-width: none; }
+      #projects #project-panel-little .little-card p { grid-column: 2; grid-row: 2; margin: 0; max-width: 620px; }
+
+      @media (max-width: 640px) {
+        #projects #project-panel-little .little-card { grid-template-columns: 1fr; row-gap: 6px; }
+        #projects #project-panel-little .little-card .card-index,
+        #projects #project-panel-little .little-card h4,
+        #projects #project-panel-little .little-card p { grid-column: 1; }
+        #projects #project-panel-little .little-card .card-index { grid-row: 1; }
+        #projects #project-panel-little .little-card h4 { grid-row: 2; }
+        #projects #project-panel-little .little-card p { grid-row: 3; }
+      }
+
+      /* The resume is a quiet image preview; the browser PDF toolbar never appears. */
+      .resume-viewer { display: grid; gap: 28px; width: 100%; }
+      .resume-viewer { height: min(78vh, 760px); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y proximity; }
+      .resume-page, .resume-lightbox-image-button { background: transparent; border: 0; border-radius: 0; cursor: zoom-in; display: block; margin: 0; padding: 0; text-align: left; width: 100%; }
+      .resume-page { scroll-snap-align: start; }
+      .resume-page { transition: filter 180ms ease, transform 220ms ease; }
+      .resume-page:hover { filter: drop-shadow(0 18px 22px rgba(0,0,0,.16)); transform: translateY(-3px); }
+      .resume-page img { height: auto; width: 100%; }
+      .resume-lightbox { align-items: center; background: rgba(20,19,17,.78); display: flex; inset: 0; justify-content: center; padding: 24px; position: fixed; z-index: 30; }
+      .resume-lightbox[hidden] { display: none; }
+      .resume-lightbox-close { background: transparent; border: 0; color: #f8f8f6; cursor: pointer; font-size: 2rem; line-height: 1; padding: 8px; position: fixed; right: 24px; top: 18px; z-index: 2; }
+      .resume-lightbox-viewport { max-height: calc(100vh - 48px); max-width: calc(100vw - 48px); overflow: auto; width: min(1120px, calc(100vw - 48px)); }
+      .resume-lightbox-viewport > .eyebrow { color: rgba(248,248,246,.68); margin-bottom: 12px; }
+      .resume-lightbox-image-button { width: 100%; }
+      .resume-lightbox-image-button img { display: block; height: auto; max-width: none; width: 100%; }
+      .resume-lightbox-image-button.is-zoomed { cursor: zoom-out; width: 150%; }
+      .project-preview-button { cursor: pointer; }
+      .project-preview-button:hover .laptop { transform: translateY(-5px); }
+      .project-preview-button .laptop { transition: transform 220ms ease; }
+      #project-panel-knowledge .project-visual { align-items: center; aspect-ratio: 1.28; background-color: #f0ecdf; background-image: linear-gradient(rgba(100,120,150,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(100,120,150,.12) 1px, transparent 1px); background-size: 48px 48px; padding: clamp(28px, 5vw, 64px); }
+      #project-panel-knowledge .project-visual::after { color: rgba(30,29,27,.62); content: "CLICK TO OPEN THE WEBSITE ↗"; left: 22px; top: 18px; }
+      #project-panel-knowledge .laptop { border: 10px solid #0d0e0d; border-radius: 28px 28px 12px 12px; box-shadow: 0 24px 38px rgba(30,29,27,.24); height: 82%; width: 96%; }
+      #project-panel-knowledge .laptop::before { background: #0d0e0d; border-radius: 0 0 14px 14px; content: ""; height: 20px; left: 50%; position: absolute; top: -10px; transform: translateX(-50%); width: 130px; z-index: 2; }
+      #project-panel-knowledge .laptop::after { bottom: -18%; height: 14%; left: -10%; width: 120%; }
+      #project-panel-knowledge .project-visual { background: transparent; background-image: none; overflow: visible; padding: clamp(22px, 4vw, 48px) 0 0; }
+      #project-panel-knowledge .project-visual::before { background-color: transparent; background-image: linear-gradient(rgba(100,120,150,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(100,120,150,.12) 1px, transparent 1px); background-size: 48px 48px; content: ""; inset: -6% -8% -2%; opacity: .55; position: absolute; z-index: 0; }
+      #project-panel-knowledge .project-visual > * { position: relative; z-index: 1; }
+      #project-panel-knowledge .project-visual::after { z-index: 2; }
+      .knowledge-browser-screen { display: block; padding: 0; }
+      .knowledge-browser-screen .screen-bar { flex: 0 0 auto; }
+      .project-site-preview { background: var(--paper); border: 0; display: block; height: 100%; object-fit: cover; pointer-events: none; width: 100%; }
+      .china-oven-screen { background: #fff; padding: 0; }
+      .china-oven-preview { display: block; height: 100%; object-fit: contain; width: 100%; }
+      .preview-click-hint { background: rgba(245,242,237,.88); bottom: 12px; color: var(--ink); font-size: .68rem; left: 12px; letter-spacing: .04em; padding: 6px 8px; position: absolute; }
+      .little-intro { display: grid; gap: 4px; margin-bottom: 20px; max-width: 680px; }
+      .little-intro-en { color: var(--muted); font-size: .88rem; }
+      #projects #project-panel-little .little-card { display: block; }
+      #projects #project-panel-little .little-card h4 { margin: 0 0 6px; }
+      #projects #project-panel-little .little-card p { margin: 0; }
+      .filter-choice::before, .filter-choice[aria-selected="true"]::before { content: none !important; display: none !important; }
+      #projects #project-panel-little .little-card { align-items: center; display: flex; justify-content: space-between; padding: 15px 0; }
+      #projects #project-panel-little .little-card h4 { font-size: clamp(1.35rem, 2.5vw, 2.15rem); margin: 0; }
+      #projects #project-panel-little .little-card .arrow { color: var(--muted); font-size: 1.2rem; }
+      #social .social-layout { gap: clamp(36px, 5vw, 88px); grid-template-columns: minmax(310px, 420px) minmax(0, 1fr); justify-content: start; }
+      #social .social-copy { max-width: 720px; }
+      #social .phone-stage { justify-content: flex-start; }
+      #social .phone { margin-left: 0; margin-right: 0; transform: rotate(4deg); }
+      #social .phone-screen { padding: 0; position: relative; }
+      .social-video-link { cursor: pointer; display: block; min-height: 540px; overflow: hidden; position: relative; }
+      .social-video-link.is-disabled { cursor: default; }
+      .social-video-link[hidden], .social-text-panel[hidden] { display: none; }
+      .social-video { display: block; height: 540px; object-fit: cover; pointer-events: none; width: 100%; }
+      .social-text-panel { min-height: 540px; padding: 18px; }
+
+      @media (max-width: 640px) {
+        #social .social-layout { grid-template-columns: 1fr; }
+        #social .phone-stage { justify-content: flex-start; }
+        #social .phone { transform: rotate(4deg); }
+        #projects #project-panel-little .little-card { padding: 14px 0; }
+        .resume-viewer { height: 680px; }
+        .resume-lightbox { padding: 16px; }
+        .resume-lightbox-viewport { max-height: calc(100vh - 32px); max-width: calc(100vw - 32px); width: calc(100vw - 32px); }
+      }
+
+      /* Mobile About layout: keep the tab controls in their own flow so they
+         cannot sit on top of the selected panel or its image collage. */
+      @media (max-width: 640px) {
+        #about .about-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 22px;
+        }
+        #about .tab-list {
+          align-self: stretch;
+          display: grid;
+          gap: 8px;
+          margin: 0;
+          min-height: 0;
+          position: static;
+          width: 100%;
+        }
+        #about .tab-button {
+          align-items: center;
+          display: flex;
+          height: auto;
+          justify-content: flex-start;
+          line-height: 1.2;
+          min-height: 48px;
+          overflow: visible;
+          padding: 12px 10px !important;
+          position: relative;
+          transform: none;
+          width: 100%;
+        }
+        #about .tab-button[aria-selected="true"] {
+          transform: none;
+        }
+        #about .about-grid > div:last-child {
+          min-width: 0;
+          width: 100%;
+        }
+        #about .tab-panel {
+          margin-top: 4px;
+          min-height: 0;
+          overflow: visible;
+        }
+        #about .care-bird-stack {
+          margin-top: 8px;
+        }
+        #about .experience-profile {
+          margin-top: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header>
+        <a class="wordmark" href="#home" aria-label="WINGKIT home">WINGKIT</a>
+        <nav aria-label="Main navigation">
+          <a href="#about">About</a>
+          <a href="#projects">AI Projects</a>
+          <a href="#social">Social Platform</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main id="home">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy reveal">
+            <div class="hero-kicker eyebrow">AI workflows / applications / personal experiments</div>
+            <h1 id="hero-title">WINGKIT</h1>
+            <div class="hero-note">
+              <div class="hero-index">Portfolio / 2026<strong>01—04</strong></div>
+              <p>I build with AI, explore new ways of working, and turn ideas into things I can actually use.</p>
+            </div>
+          </div>
+          <div class="photo-collage reveal" aria-label="Personal photo collage">
+            <figure class="photo photo-1"><img src="images/hero/01-harbour.jpg" alt="Wingkit by the harbour" /></figure>
+            <figure class="photo photo-2"><img src="images/hero/02-everyday.jpg" alt="Wingkit in an everyday moment" /></figure>
+            <figure class="photo photo-3"><img src="images/hero/03-mount-fuji.jpg" alt="Wingkit with Mount Fuji" /></figure>
+            <figure class="photo photo-4"><img src="images/hero/04-lake.jpg" alt="Wingkit beside a mountain lake" /></figure>
+            <figure class="photo photo-5"><img src="images/hero/05-sunlight.jpg" alt="Wingkit outdoors in sunlight" /></figure>
+            <figure class="photo photo-6"><img src="images/hero/06-dessert.jpg" alt="Wingkit at a table" /></figure>
+            <div class="collage-caption">Personal archive / six moments</div>
+          </div>
+        </section>
+
+        <section id="about" aria-labelledby="about-title">
+          <div class="section-head reveal">
+            <div><div class="eyebrow">01 / About</div><h2 id="about-title">My life,<br /><span class="serif">and what matters.</span></h2><p>A small archive of the life, work, and curiosities that shape what I build.</p></div>
+          </div>
+          <div class="about-grid reveal">
+          <div class="tab-list" role="tablist" aria-label="About sections">
+              <button class="tab-button" id="tab-care" role="tab" aria-selected="true" aria-controls="panel-care">What I Care About</button>
+              <button class="tab-button" id="tab-experience" role="tab" aria-selected="false" aria-controls="panel-experience">Experience</button>
+              <button class="tab-button" id="tab-resume" role="tab" aria-selected="false" aria-controls="panel-resume">Résumé</button>
+            </div>
+            <div>
+              <div class="tab-panel" id="panel-care" role="tabpanel" aria-labelledby="tab-care">
+                <div class="care-layout">
+                  <div class="care-bird-stack" aria-label="A small bird at home">
+                    <div class="gaogao-label" aria-hidden="true"><span>GAOGAO</span><small>MY BIRD'S NAME</small></div>
+                    <figure class="care-bird-photo care-bird-photo-1" role="button" tabindex="0" aria-label="Bring the first bird photo forward"><img src="images/bird-01.jpg" alt="The bird at home beside a small lamp" /></figure>
+                    <figure class="care-bird-photo care-bird-photo-2" role="button" tabindex="0" aria-label="Bring the second bird photo forward"><img src="images/bird-02.jpg" alt="The bird resting beside a keyboard" /></figure>
+                    <figure class="care-bird-photo care-bird-photo-3" role="button" tabindex="0" aria-label="Bring the third bird photo forward"><img src="images/bird-03.jpg" alt="The bird sitting on a laptop" /></figure>
+                    <figure class="care-bird-photo care-bird-photo-4" role="button" tabindex="0" aria-label="Bring the fourth bird photo forward"><img src="images/bird-04.jpg" alt="The bird looking toward the camera" /></figure>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-panel" id="panel-experience" role="tabpanel" aria-labelledby="tab-experience" hidden>
+                <div class="experience-profile">
+                  <div class="experience-block"><h4>About Me</h4><p>I learn new tools quickly and turn them into practical solutions. By teaching myself AI and automation, I built a job-intelligence system, a knowledge Q&amp;A system, and a B2B lead-generation workflow. I am also a strong cross-functional communicator: I listen for different priorities, adapt how I work, and keep people aligned. Together, these strengths help me move from an unclear problem to a practical, well-structured result.</p></div>
+                  <div class="experience-block"><h4>Education</h4><div class="experience-entry"><strong>MSc · Transportation Engineering</strong><span>University of Shanghai for Science and Technology</span></div><div class="experience-entry"><strong>BEng · Logistics Engineering</strong><span>Dalian University</span></div></div>
+                  <div class="experience-block"><h4>Professional Experience</h4><div class="experience-entry"><strong>General Affairs Coordinator · Nanhai Navigation Support Center</strong><span>Worked in a government agency, coordinating across departments, preparing professional documents, and supporting projects, meetings, and on-site activities. I learned to understand competing priorities, adapt my communication style, and keep complex work moving clearly and reliably.</span></div></div>
+                </div>
+              </div>
+              <div class="tab-panel" id="panel-resume" role="tabpanel" aria-labelledby="tab-resume" hidden>
+                <div class="resume-viewer" aria-label="Resume preview">
+                  <button class="resume-page" type="button" data-resume-page="1" aria-label="Open resume page 1 larger"><img src="assets/resume-page-1.png" alt="Resume page 1" /></button>
+                  <button class="resume-page" type="button" data-resume-page="2" aria-label="Open resume page 2 larger"><img src="assets/resume-page-2.png" alt="Resume page 2" /></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" class="projects-section" aria-labelledby="projects-title">
+          <div class="section-head reveal">
+            <div><div class="eyebrow">02 / AI Projects</div><h2 id="projects-title">What I <span class="serif">build.</span></h2></div>
+            <p>Two larger systems, a set of reusable workflows, and small experiments that began with a real personal need.</p>
+          </div>
+
+          <div class="project-browser reveal">
+            <aside class="project-filter" aria-label="Project filters">
+              <div class="filter-list" role="tablist" aria-label="Project categories">
+                <button class="filter-choice" type="button" role="tab" aria-selected="true" aria-controls="project-panel-knowledge" data-project-view="knowledge"><span>Knowledge Website</span></button>
+                <button class="filter-choice" type="button" role="tab" aria-selected="false" aria-controls="project-panel-china" data-project-view="china"><span>China Oven Export</span></button>
+                <button class="filter-choice" type="button" role="tab" aria-selected="false" aria-controls="project-panel-skills" data-project-view="skills"><span>Skills / Workflows</span></button>
+                <button class="filter-choice" type="button" role="tab" aria-selected="false" aria-controls="project-panel-little" data-project-view="little"><span>Little Stuff</span></button>
+              </div>
+            </aside>
+
+            <div class="project-content">
+              <div class="project-panel" id="project-panel-knowledge" role="tabpanel">
+                <article class="main-project">
+                  <button class="project-visual project-preview-button" type="button" data-detail="knowledge" data-project-url="https://leeyongjielife-eng.github.io/ai-weekly-digest/" aria-label="Open Knowledge Website"><div class="laptop" aria-hidden="true"><div class="laptop-screen knowledge-browser-screen"><video class="project-site-preview" autoplay muted loop playsinline preload="auto" poster="assets/knowledge-preview-poster.jpg?v=2"><source src="assets/knowledge-preview.mp4?v=2" type="video/mp4" /></video></div></div></button>
+                  <div class="project-meta"><div class="number">01</div><div><h3>Knowledge Website</h3><div class="micro">AI knowledge system · 2026</div><p>AI learning quickly became fragmented across too many formats and sources, so I built a personal knowledge website to collect only the material I want to keep. It works from both the web and terminal, bringing together the pages, interview notes, and technical references I gather each week, organised by topic for fast filtering and focused review.</p></div></div>
+                </article>
+              </div>
+
+              <div class="project-panel" id="project-panel-china" role="tabpanel" hidden>
+                <article class="main-project">
+                  <button class="project-visual project-preview-button" type="button" data-detail="china-oven" aria-label="Open China Oven Export details"><div class="laptop" aria-hidden="true"><div class="laptop-screen china-oven-screen"><img class="china-oven-preview" src="assets/china-oven-preview.jpg" alt="Kamado export AI Agent Workforce architecture" /></div></div></button>
+                  <div class="project-meta"><div class="number">02</div><div><h3>China Oven Export</h3><div class="micro">AI market research · 2026</div><p><strong>Situation.</strong> Export work was slowed by scattered research, unclear offers, and manual follow-up. <strong>Task.</strong> Build a repeatable workflow with clear roles, visible handoffs, and human review. <strong>Action.</strong> I designed a Founder Agent-led AI workforce across Research, Offer, Sales, Quoting, Supplier, and Content, then locked Kamado 18/21 for the UK market. <strong>Result.</strong> The system is in place and the outbound pipeline has reached 250+ external contacts.</p></div></div>
+                </article>
+              </div>
+
+              <div class="project-panel" id="project-panel-skills" role="tabpanel" hidden>
+                <p class="panel-intro">Reusable tools and workflows for turning one-off work into repeatable practice.</p>
+                <div class="workflow-list">
+                  <button class="workflow-item" data-detail="youtube"><span class="idx">01</span><h4>YouTube Knowledge Pipeline</h4></button>
+                  <button class="workflow-item" data-detail="project-log"><span class="idx">02</span><h4>Project Log Skill</h4></button>
+                  <button class="workflow-item" data-detail="wechat"><span class="idx">03</span><h4>WeChat Publishing Skill</h4></button>
+                </div>
+              </div>
+
+              <div class="project-panel" id="project-panel-little" role="tabpanel" hidden>
+                <p class="panel-intro little-intro"><span>除此之外，我还做了一些小工具和小实验。</span><span class="little-intro-en">Beyond the main projects, I also build many small tools and experiments.</span></p>
+                <div class="little-grid">
+                  <button class="little-card" data-detail="idolmerch"><h4>IdolMerch Studio</h4></button>
+                  <button class="little-card" data-detail="pet"><h4>Desktop Pet</h4></button>
+                  <button class="little-card" data-detail="ielts"><h4>IELTS Vocab Review</h4></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="social" aria-labelledby="social-title">
+          <div class="social-layout reveal">
+            <div class="phone-stage"><div class="phone" aria-live="polite"><div class="phone-screen"><a class="social-video-link" id="social-video-panel" href="https://www.xiaohongshu.com/user/profile/5b8a3b" target="_blank" rel="noopener noreferrer" aria-label="打开我的小红书主页"><video class="social-video" id="social-video" autoplay muted loop playsinline preload="metadata" poster="assets/xiaohongshu-poster.jpg"><source id="social-video-source" src="assets/xiaohongshu-demo.mp4" type="video/mp4" /></video></a><div class="social-text-panel" id="social-text-panel" hidden><div class="phone-top"><span class="micro">WINGKIT / FEED</span><span class="dot"></span></div><div class="social-preview"><div class="preview-label" id="social-label">Xiaohongshu / Notes</div><h3 id="social-heading">Content<br />to keep.</h3><p id="social-description">点击视频查看我的小红书账号。</p><div class="preview-lines"><div id="social-line-1">AI learning notes</div><div id="social-line-2">Workflow experiments</div><div id="social-line-3">Project retrospectives</div></div><span class="social-open" id="social-open">View profile ↗</span></div></div></div></div></div>
+            <div class="social-copy"><div class="eyebrow">03 / Social Platform</div><h2 id="social-title">What I <span class="serif">share.</span></h2><p>除此之外，我也会在社交平台上面去分享相关的知识和内容。</p><div class="platform-list" role="tablist" aria-label="Social platforms"><button class="platform-button" role="tab" aria-selected="true" data-platform="xiaohongshu"><span>Xiaohongshu</span></button><button class="platform-button" role="tab" aria-selected="false" data-platform="linkedin"><span>LinkedIn</span></button><button class="platform-button" role="tab" aria-selected="false" data-platform="wechat"><span>WeChat Official Account</span></button></div><div class="platform-account"><div class="eyebrow" id="social-account-label">Xiaohongshu / July—August 2026</div><p id="social-account-description">I started this account in July 2026 to share practical AI learning notes and useful discoveries. Across July and August, I published approximately 27 visual posts, earning around 470 likes and 16,000 views. I paused posting as my job search and other priorities began to require more of my time.</p></div></div>
+          </div>
+        </section>
+      </main>
+
+      <footer id="contact">
+        <div class="footer-grid"><div><div class="eyebrow">Contact</div><h2>Contact <span class="serif">me.</span></h2></div><div class="footer-links"><a href="mailto:leeyongjielife@gmail.com">leeyongjielife@gmail.com ↗</a><a href="tel:+8613794613243">+86 137 9461 3243 ↗</a></div></div>
+        <div class="footer-note"><span>© 2026 WINGKIT</span></div>
+      </footer>
+    </div>
+
+    <div class="modal" id="detail-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-card"><button class="modal-close" id="modal-close" aria-label="Close project details">×</button><div class="eyebrow" id="modal-kicker">Project detail</div><h2 id="modal-title"></h2><div class="detail-grid" id="modal-body"></div></div>
+    </div>
+
+    <div class="resume-lightbox" id="resume-lightbox" role="dialog" aria-modal="true" aria-labelledby="resume-lightbox-title" hidden>
+      <button class="resume-lightbox-close" id="resume-lightbox-close" type="button" aria-label="Close enlarged resume">×</button>
+      <div class="resume-lightbox-viewport">
+        <div class="eyebrow" id="resume-lightbox-title">Resume / enlarged view</div>
+        <button class="resume-lightbox-image-button" id="resume-lightbox-image-button" type="button" aria-label="Zoom resume page"><img id="resume-lightbox-image" src="" alt="Enlarged resume page" /></button>
+      </div>
+    </div>
+
+    <script>
+      const detailData = {
+        knowledge: { kicker: '01 / Main project', title: 'Knowledge Website', blocks: [
+          ['Problem', 'AI learning notes, interviews, engineering retrospectives, and external sources were becoming difficult to search and verify together.'],
+          ['What I built', 'A local knowledge layer with source intake, claim comparison, retrieval, cited Chinese answers, and an answerability gate.'],
+          ['My contribution', 'Defined the knowledge lifecycle, source boundaries, evaluation cases, and human review points; implemented the local Python workflow with Codex support.'],
+          ['Evidence', 'The latest project materials report 9/9 core retrieval cases, 3/3 QA cases, and 9/9 answerability cases passing.'],
+          ['Boundary', 'A personal knowledge workflow, not an enterprise search product. Evidence is preferred over confident completion.']
+        ]},
+        'china-oven': { kicker: '02 / Main project', title: 'China Oven Export', blocks: [
+          ['Situation', 'Export work was slowed by scattered research, unclear offers, and manual follow-up across one product line.'],
+          ['Task', 'Build a repeatable export workflow with clear specialist roles, visible handoffs, and human review before a lead moves forward.'],
+          ['Action', 'I designed a human-in-the-loop AI workforce with a Founder Agent coordinating Research, Offer, Sales, Quoting, Supplier, and Content; then locked Kamado 18/21 for the UK market.'],
+          ['Result', 'The system and process are in place, and the outbound pipeline has reached 250+ external contacts.']
+        ]},
+        youtube: { kicker: 'Skills / workflow', title: 'YouTube Knowledge Pipeline', blocks: [
+          ['Problem', 'A single analysis template cannot serve product, AI learning, and life-growth interviews equally well.'],
+          ['Flow', 'Metadata and subtitles → main-thread understanding → specialist routing → structured Markdown → Obsidian → external sync.'],
+          ['My contribution', 'Designed the router, skill boundaries, batch orchestration contract, and the point where external writing is allowed.'],
+          ['Output', 'The result is a reusable knowledge note, not just a one-off model response.']
+        ]},
+        'project-log': { kicker: 'Skills / workflow', title: 'Project Log Skill', blocks: [
+          ['Problem', 'Long-running coding projects lose decisions and context when the only memory is the chat thread.'],
+          ['What it does', 'Maintains one project page, appends explicit decisions, records conclusions, and creates a handoffable project summary.'],
+          ['My contribution', 'Defined the logging boundary: record decisions and conclusions, not every discussion; keep the workflow usable across Codex, Claude, and Cursor.'],
+          ['Why it matters', 'It is a small tool for making agent collaboration more durable.']
+        ]},
+        wechat: { kicker: 'Skills / workflow', title: 'WeChat Publishing Skill', blocks: [
+          ['Problem', 'For one person, choosing a topic, researching, writing, formatting, reviewing, and preparing a WeChat article for publication takes significant time.'],
+          ['Workflow', 'The skill connects topic selection, drafting, page layout, editorial review, and publishing preparation in one repeatable process.'],
+          ['My contribution', 'I designed the stages, prompts, handoffs, and review checkpoints so every step produces a clear, reusable output.'],
+          ['Result', 'It reduces repetitive manual work while keeping final editorial approval with the user.']
+        ]},
+        idolmerch: { kicker: 'Little stuff', title: 'IdolMerch Studio', blocks: [
+          ['Problem', 'Creators often move between background removal, asset management, layout, and export across several tools.'],
+          ['What I built', 'A browser-based local-first editor with local AI background removal, Canvas layers, material management, effects, presets, and export.'],
+          ['Stack', 'React · Vite · Konva.js · IndexedDB / Dexie · Vitest'],
+          ['Lesson', 'The project moved my focus from asking an agent to write code toward designing a more reliable working environment for the agent.']
+        ]},
+        pet: { kicker: 'Little stuff', title: 'Desktop Pet', blocks: [
+          ['Product idea', 'A low-interruption companion for long study and building sessions, rather than an efficiency assistant or reminder system.'],
+          ['What exists', 'Transparent always-on-top desktop window, frame animation, interaction menu, Apple Music link, local memory, routines, and random events.'],
+          ['Stack', 'Python · PyQt6 · AppKit · AppleScript · local JSON'],
+          ['Status', 'In development; core interaction, music link, and behavior scheduling are implemented.']
+        ]},
+        ielts: { kicker: 'Little stuff', title: 'IELTS Vocab Review', blocks: [
+          ['Problem', 'General word lists do not reflect the words a learner actually misses in their own practice.'],
+          ['What I built', 'A personal review loop with quick entry, Google Sheets data, cards, three-button rating, spaced repetition, story generation, and write-back.'],
+          ['Evidence', 'Approximately 200 real words entered, 30 review operations completed, and 30 corresponding results written back.'],
+          ['Stack', 'React · Vite · TypeScript · Node / Express · Google Sheets · Gemini']
+        ]}
+      };
+
+      const modal = document.querySelector('#detail-modal');
+      const modalTitle = document.querySelector('#modal-title');
+      const modalKicker = document.querySelector('#modal-kicker');
+      const modalBody = document.querySelector('#modal-body');
+      const closeModal = () => { modal.classList.remove('is-open'); document.body.classList.remove('modal-open'); };
+      document.querySelectorAll('[data-detail]').forEach((trigger) => trigger.addEventListener('click', () => {
+        if (trigger.dataset.projectUrl) {
+          window.open(trigger.dataset.projectUrl, '_blank', 'noopener,noreferrer');
+          return;
+        }
+        const detail = detailData[trigger.dataset.detail];
+        if (!detail) return;
+        modalKicker.textContent = detail.kicker;
+        modalTitle.textContent = detail.title;
+        modalBody.innerHTML = detail.blocks.map(([label, text], index) => `<div class="detail-block ${index === detail.blocks.length - 1 && detail.blocks.length % 2 ? 'detail-wide' : ''}"><h3>${label}</h3><p>${text}</p></div>`).join('');
+        modal.classList.add('is-open');
+        document.body.classList.add('modal-open');
+        document.querySelector('#modal-close').focus();
+      }));
+      document.querySelector('#modal-close').addEventListener('click', closeModal);
+      modal.addEventListener('click', (event) => { if (event.target === modal) closeModal(); });
+
+      const resumeLightbox = document.querySelector('#resume-lightbox');
+      const resumeLightboxImage = document.querySelector('#resume-lightbox-image');
+      const resumeLightboxImageButton = document.querySelector('#resume-lightbox-image-button');
+      const closeResumeLightbox = () => {
+        resumeLightbox.hidden = true;
+        resumeLightboxImageButton.classList.remove('is-zoomed');
+        resumeLightboxImage.removeAttribute('src');
+        document.body.classList.remove('modal-open');
+      };
+      document.querySelectorAll('[data-resume-page]').forEach((page) => page.addEventListener('click', () => {
+        resumeLightboxImage.src = `assets/resume-page-${page.dataset.resumePage}.png`;
+        resumeLightbox.hidden = false;
+        document.body.classList.add('modal-open');
+      }));
+      resumeLightboxImageButton.addEventListener('click', () => resumeLightboxImageButton.classList.toggle('is-zoomed'));
+      document.querySelector('#resume-lightbox-close').addEventListener('click', closeResumeLightbox);
+      resumeLightbox.addEventListener('click', (event) => { if (event.target === resumeLightbox) closeResumeLightbox(); });
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeModal(); closeResumeLightbox(); } });
+
+      const tabs = [...document.querySelectorAll('[role="tab"]')].filter((tab) => tab.closest('.tab-list'));
+      tabs.forEach((tab) => tab.addEventListener('click', () => {
+        tabs.forEach((item) => { item.setAttribute('aria-selected', item === tab ? 'true' : 'false'); document.querySelector('#' + item.getAttribute('aria-controls')).hidden = item !== tab; });
+      }));
+
+      const projectViews = [...document.querySelectorAll('[data-project-view]')];
+      const projectPanels = [...document.querySelectorAll('.project-panel')];
+      projectViews.forEach((button) => button.addEventListener('click', () => {
+        const view = button.dataset.projectView;
+        projectViews.forEach((item) => item.setAttribute('aria-selected', item === button ? 'true' : 'false'));
+        projectPanels.forEach((panel) => { panel.hidden = panel.id !== `project-panel-${view}`; });
+      }));
+
+      const socialContent = {
+        xiaohongshu: ['Xiaohongshu / Notes', 'Latest\nfeed.', 'Click the video to visit my Xiaohongshu profile.', 'AI learning notes', 'Useful discoveries', 'Visual explainers', 'Xiaohongshu / July—August 2026', 'I started this account in July 2026 to share practical AI learning notes and useful discoveries. Across July and August, I published approximately 27 visual posts, earning around 470 likes and 16,000 views. I paused posting as my job search and other priorities began to require more of my time.'],
+        linkedin: ['LinkedIn / Work notes', 'Work in\npublic.', 'Click the video to visit my LinkedIn profile.', 'AI knowledge', 'Useful concepts', 'Learning notes', 'LinkedIn / Occasional AI Notes', 'I update LinkedIn only occasionally, using it mainly to share concise AI knowledge, useful concepts, and selected notes from what I am learning and building.'],
+        wechat: ['WeChat / Archive', 'Ideas\nwith a trail.', 'A video preview of my WeChat Official Account.', 'Automotive insights', 'Vertical content', 'Channel operations', 'WeChat / Automotive Content · Since 14 September 2026', 'I launched this WeChat Official Account on 14 September 2026 and have published only a few articles so far. Each has reached around 100 reads. By focusing on a clear automotive niche and achieving consistent early readership, the account shows my ability to position, produce, and operate a vertical content channel from zero.']
+      };
+      const socialVideos = {
+        xiaohongshu: { src: 'assets/xiaohongshu-demo.mp4', poster: 'assets/xiaohongshu-poster.jpg', href: 'https://www.xiaohongshu.com/user/profile/5b8a3b', label: '打开我的小红书主页' },
+        linkedin: { src: 'assets/linkedin-demo.mp4', poster: 'assets/linkedin-poster.jpg', href: 'https://www.linkedin.com/in/yongjie-li-525488303/', label: '打开我的 LinkedIn 主页' },
+        wechat: { src: 'assets/wechat-demo.mp4', poster: 'assets/wechat-poster.jpg', href: '', label: '微信公众号视频预览' }
+      };
+      const socialVideoPanel = document.querySelector('#social-video-panel');
+      const socialTextPanel = document.querySelector('#social-text-panel');
+      const socialVideo = document.querySelector('#social-video');
+      const socialVideoSource = document.querySelector('#social-video-source');
+      document.querySelectorAll('[data-platform]').forEach((button) => button.addEventListener('click', () => {
+        document.querySelectorAll('[data-platform]').forEach((item) => item.setAttribute('aria-selected', item === button ? 'true' : 'false'));
+        const videoContent = socialVideos[button.dataset.platform];
+        const showsVideo = Boolean(videoContent);
+        socialVideoPanel.hidden = !showsVideo;
+        socialTextPanel.hidden = showsVideo;
+        if (showsVideo) {
+          if (socialVideoSource.getAttribute('src') !== videoContent.src) {
+            socialVideo.pause();
+            socialVideoSource.setAttribute('src', videoContent.src);
+            socialVideo.setAttribute('poster', videoContent.poster);
+            socialVideo.load();
+          }
+          socialVideoPanel.setAttribute('aria-label', videoContent.label);
+          if (videoContent.href) {
+            socialVideoPanel.setAttribute('href', videoContent.href);
+            socialVideoPanel.setAttribute('target', '_blank');
+            socialVideoPanel.setAttribute('rel', 'noopener noreferrer');
+            socialVideoPanel.classList.remove('is-disabled');
+          } else {
+            socialVideoPanel.removeAttribute('href');
+            socialVideoPanel.removeAttribute('target');
+            socialVideoPanel.removeAttribute('rel');
+            socialVideoPanel.classList.add('is-disabled');
+          }
+          const playback = socialVideo.play();
+          if (playback) playback.catch(() => {});
+        } else {
+          socialVideo.pause();
+        }
+        const content = socialContent[button.dataset.platform];
+        document.querySelector('#social-label').textContent = content[0];
+        document.querySelector('#social-heading').innerHTML = content[1].replace('\n', '<br />');
+        document.querySelector('#social-description').textContent = content[2];
+        document.querySelector('#social-line-1').textContent = content[3];
+        document.querySelector('#social-line-2').textContent = content[4];
+        document.querySelector('#social-line-3').textContent = content[5];
+        document.querySelector('#social-account-label').textContent = content[6];
+        document.querySelector('#social-account-description').textContent = content[7];
+      }));
+
+      const knowledgePreview = document.querySelector('.project-site-preview');
+      if (knowledgePreview) {
+        knowledgePreview.muted = true;
+        const playback = knowledgePreview.play();
+        if (playback) playback.catch(() => {});
+      }
+
+      const makeCollageInteractive = (selector, angles) => {
+        const photos = [...document.querySelectorAll(selector)];
+        const selectPhoto = (photo, index) => {
+          photos.forEach((item) => item.classList.remove('is-picked'));
+          photo.classList.add('is-picked');
+          photo.style.setProperty('--picked-angle', angles[index] || '0deg');
+        };
+        photos.forEach((photo, index) => {
+          photo.addEventListener('click', () => selectPhoto(photo, index));
+          photo.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              selectPhoto(photo, index);
+            }
+          });
+        });
+      };
+      makeCollageInteractive('.care-bird-photo', ['-7deg', '4deg', '8deg', '-5deg']);
+
+      const careContent = {
+        useful: ['Make it useful,<br />then make it clearer.', 'I care about turning a messy personal problem into a workflow with a clear boundary, a useful output, and a way to tell whether it worked.'],
+        clear: ['Clarity is<br />a design choice.', 'I separate facts, states, and conclusions so a system can be checked, explained, and improved without hiding uncertainty behind polished language.'],
+        repeatable: ['Useful once<br />is not enough.', 'AI is most interesting to me when it changes what a person can do repeatedly, with a workflow that gets better through real use.']
+      };
+      document.querySelectorAll('[data-care]').forEach((button) => button.addEventListener('click', () => {
+        const key = button.dataset.care;
+        document.querySelectorAll('[data-care]').forEach((item) => item.setAttribute('aria-selected', item === button ? 'true' : 'false'));
+        document.querySelectorAll('[data-care-panel]').forEach((panel) => { panel.hidden = panel.dataset.carePanel !== key; });
+        const panel = document.querySelector(`[data-care-panel="${key}"]`);
+        if (panel) {
+          const heading = panel.querySelector('h3');
+          const copy = panel.querySelector('p');
+          if (heading) heading.innerHTML = careContent[key][0];
+          if (copy) copy.textContent = careContent[key][1];
+        }
+      }));
+
+      if (false) {
+      const pages = [
+        { selector: '#home > .hero', anchor: '#home' },
+        { selector: '#about', anchor: '#about' },
+        { selector: '#projects', anchor: '#projects', screen: 'main' },
+        { selector: '#projects', anchor: '#projects', screen: 'skills' },
+        { selector: '#projects', anchor: '#projects', screen: 'little' },
+        { selector: '#social', anchor: '#social' },
+        { selector: '#contact', anchor: '#contact' }
+      ];
+      const pageDots = document.querySelector('.page-dots');
+      const pageCount = document.querySelector('#page-count');
+      let currentPage = 0;
+      pages.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'page-dot';
+        dot.type = 'button';
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', `Go to page ${index + 1}`);
+        dot.addEventListener('click', () => goToPage(index));
+        pageDots.appendChild(dot);
+      });
+      const activatePage = (index) => {
+        currentPage = Math.max(0, Math.min(pages.length - 1, index));
+        document.querySelectorAll('main > section, footer').forEach((section) => section.classList.remove('is-page-active'));
+        const page = pages[currentPage];
+        const section = document.querySelector(page.selector);
+        if (section) {
+          section.classList.add('is-page-active');
+          if (page.screen) section.dataset.screen = page.screen;
+          section.querySelectorAll('.reveal').forEach((element) => element.classList.remove('is-visible'));
+          requestAnimationFrame(() => section.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible')));
+        }
+        document.querySelectorAll('.page-dot').forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === currentPage));
+        pageCount.textContent = `${String(currentPage + 1).padStart(2, '0')} / ${String(pages.length).padStart(2, '0')}`;
+      };
+      const goToPage = (index) => activatePage(index);
+      document.querySelector('#page-prev').addEventListener('click', () => goToPage(currentPage - 1));
+      document.querySelector('#page-next').addEventListener('click', () => goToPage(currentPage + 1));
+      document.querySelectorAll('nav a').forEach((link) => link.addEventListener('click', (event) => {
+        const target = link.getAttribute('href');
+        const index = pages.findIndex((page) => page.anchor === target);
+        if (index < 0) return;
+        event.preventDefault();
+        goToPage(index);
+      }));
+      document.querySelectorAll('.photo').forEach((photo, index) => photo.addEventListener('click', () => {
+        document.querySelectorAll('.photo').forEach((item) => item.classList.remove('is-picked'));
+        photo.classList.add('is-picked');
+        photo.style.setProperty('--picked-angle', `${[-6, 4, -2, 5, -4, 2][index]}deg`);
+      }));
+      let wheelLocked = false;
+      window.addEventListener('wheel', (event) => {
+        if (wheelLocked || document.body.classList.contains('modal-open')) return;
+        event.preventDefault();
+        if (Math.abs(event.deltaY) < 12) return;
+        wheelLocked = true;
+        goToPage(currentPage + (event.deltaY > 0 ? 1 : -1));
+        window.setTimeout(() => { wheelLocked = false; }, 560);
+      }, { passive: false });
+      document.addEventListener('keydown', (event) => {
+        if (document.body.classList.contains('modal-open')) return;
+        if (['ArrowDown', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); goToPage(currentPage + 1); }
+        if (['ArrowUp', 'PageUp'].includes(event.key)) { event.preventDefault(); goToPage(currentPage - 1); }
+        if (event.key === 'Home') { event.preventDefault(); goToPage(0); }
+        if (event.key === 'End') { event.preventDefault(); goToPage(pages.length - 1); }
+      });
+      activatePage(0);
+      }
+
+      const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }), { threshold: .12 });
+      document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+    </script>
+  </body>
+</html>
