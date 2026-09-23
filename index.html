@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f5f2ed" />
+    <meta name="theme-color" content="#000000" />
     <meta name="description" content="Wingkit — an editorial portfolio of AI workflows, applications, and personal experiments." />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <title>WINGKIT — AI workflows & things I can use</title>
@@ -63,7 +63,7 @@
       .photo-3 { height: 58%; left: 34%; top: 0; transform: rotate(2deg); width: 34%; }
       .photo-4 { height: 53%; right: 0; top: 9%; transform: rotate(5deg); width: 31%; }
       .photo-5 { bottom: 3%; height: 43%; right: 4%; transform: rotate(-4deg); width: 31%; }
-      .photo-6 { bottom: 4%; height: 34%; left: 46%; transform: rotate(-1deg); width: 25%; }
+      .photo-6 { bottom: 4%; height: 34%; left: 40%; transform: rotate(-1deg); width: 25%; }
       .photo:hover { transform: translateY(-6px) rotate(0deg) scale(1.02); }
       .collage-caption { bottom: 0; color: var(--muted); font-size: 0.67rem; letter-spacing: 0.14em; position: absolute; right: 0; text-transform: uppercase; }
 
@@ -262,7 +262,7 @@
         .photo-3 { left: 31%; width: 37%; }
         .photo-4 { width: 34%; }
         .photo-5 { width: 35%; }
-        .photo-6 { left: 42%; width: 28%; }
+        .photo-6 { left: 36%; width: 28%; }
         .care-layout { grid-template-columns: 1fr; }
         .bird-placeholder { max-width: 190px; }
         .timeline-item { grid-template-columns: 1fr; gap: 6px; }
@@ -481,7 +481,7 @@
       #projects #project-panel-little .little-card h4 { margin: 12px 0 8px; }
 
       .photo-2 { bottom: 3%; height: 34%; left: auto; right: 4%; top: auto; transform: rotate(-4deg); width: 26%; }
-      .photo-5 { bottom: auto; height: 38%; left: 18%; right: auto; top: 49%; transform: rotate(3deg); width: 30%; }
+      .photo-5 { bottom: auto; height: 38%; left: 12%; right: auto; top: 49%; transform: rotate(3deg); width: 30%; }
       #about .care-bird-photo-1 { z-index: 2; }
       #about .care-bird-photo-2 { bottom: 4%; height: 45%; left: 3%; top: auto; transform: rotate(4deg); width: 46%; z-index: 6; }
       #about .care-bird-photo-3 { z-index: 3; }
@@ -498,7 +498,7 @@
         .resume-pdf-wrap, .resume-pdf { min-height: 680px; }
         .resume-pdf { height: 760px; }
         .photo-2 { height: 34%; width: 31%; }
-        .photo-5 { height: 36%; left: 14%; width: 34%; }
+        .photo-5 { height: 36%; left: 8%; width: 34%; }
         #projects #project-panel-skills .workflow-item h4 { font-size: 1.25rem; }
       }
 
@@ -564,17 +564,18 @@
       .project-preview-button:hover .laptop { transform: translateY(-5px); }
       .project-preview-button .laptop { transition: transform 220ms ease; }
       #project-panel-knowledge .project-visual { align-items: center; aspect-ratio: 1.28; background-color: #f0ecdf; background-image: linear-gradient(rgba(100,120,150,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(100,120,150,.12) 1px, transparent 1px); background-size: 48px 48px; padding: clamp(28px, 5vw, 64px); }
-      #project-panel-knowledge .project-visual::after { color: rgba(30,29,27,.62); content: "CLICK TO OPEN THE WEBSITE ↗"; left: 22px; top: 18px; }
+      #project-panel-knowledge .project-visual::after { content: none; }
       #project-panel-knowledge .laptop { border: 10px solid #0d0e0d; border-radius: 28px 28px 12px 12px; box-shadow: 0 24px 38px rgba(30,29,27,.24); height: 82%; width: 96%; }
       #project-panel-knowledge .laptop::before { background: #0d0e0d; border-radius: 0 0 14px 14px; content: ""; height: 20px; left: 50%; position: absolute; top: -10px; transform: translateX(-50%); width: 130px; z-index: 2; }
       #project-panel-knowledge .laptop::after { bottom: -18%; height: 14%; left: -10%; width: 120%; }
       #project-panel-knowledge .project-visual { background: transparent; background-image: none; overflow: visible; padding: clamp(22px, 4vw, 48px) 0 0; }
-      #project-panel-knowledge .project-visual::before { background-color: transparent; background-image: linear-gradient(rgba(100,120,150,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(100,120,150,.12) 1px, transparent 1px); background-size: 48px 48px; content: ""; inset: -6% -8% -2%; opacity: .55; position: absolute; z-index: 0; }
+      #project-panel-knowledge .project-visual::before { background-color: transparent; background-image: linear-gradient(rgba(100,120,150,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(100,120,150,.12) 1px, transparent 1px); background-size: 48px 48px; content: ""; inset: -6% -8% -2%; opacity: .55; pointer-events: none; position: absolute; z-index: 0; }
       #project-panel-knowledge .project-visual > * { position: relative; z-index: 1; }
-      #project-panel-knowledge .project-visual::after { z-index: 2; }
+      #project-panel-knowledge .project-visual > .project-site-open { color: rgba(30,29,27,.72); font-size: .82rem; left: 22px; letter-spacing: .08em; position: absolute; text-decoration: underline; text-underline-offset: 4px; text-transform: uppercase; top: 18px; z-index: 2; }
+      #project-panel-knowledge .project-site-open:hover, #project-panel-knowledge .project-site-open:focus-visible { color: #171717; }
       .knowledge-browser-screen { display: block; padding: 0; }
       .knowledge-browser-screen .screen-bar { flex: 0 0 auto; }
-      .project-site-preview { background: var(--paper); border: 0; display: block; height: 100%; object-fit: cover; pointer-events: none; width: 100%; }
+      .project-site-preview { background: var(--paper); border: 0; display: block; height: 200%; transform: scale(.5); transform-origin: top left; width: 200%; }
       .china-oven-screen { background: #fff; padding: 0; }
       .china-oven-preview { display: block; height: 100%; object-fit: contain; width: 100%; }
       .preview-click-hint { background: rgba(245,242,237,.88); bottom: 12px; color: var(--ink); font-size: .68rem; left: 12px; letter-spacing: .04em; padding: 6px 8px; position: absolute; }
@@ -589,19 +590,39 @@
       #projects #project-panel-little .little-card .arrow { color: var(--muted); font-size: 1.2rem; }
       #social .social-layout { gap: clamp(36px, 5vw, 88px); grid-template-columns: minmax(310px, 420px) minmax(0, 1fr); justify-content: start; }
       #social .social-copy { max-width: 720px; }
-      #social .phone-stage { justify-content: flex-start; }
-      #social .phone { margin-left: 0; margin-right: 0; transform: rotate(4deg); }
-      #social .phone-screen { padding: 0; position: relative; }
-      .social-video-link { cursor: pointer; display: block; min-height: 540px; overflow: hidden; position: relative; }
+      #social .phone-stage { align-items: flex-start; flex-direction: column; justify-content: flex-start; }
+      #social .phone { aspect-ratio: 2 / 3; background: transparent; border: 0; border-radius: 0; box-shadow: none; margin: 0; max-width: 430px; padding: 0; position: relative; transform: none; width: 100%; }
+      #social .phone-screen { background: #1c1c20; border-radius: 26px; inset: 9.7% 21.3% 9.2%; min-height: 0; overflow: hidden; padding: 0; position: absolute; }
+      .phone-frame { display: block; height: 100%; inset: 0; pointer-events: none; position: absolute; width: 100%; z-index: 3; }
+      .xhs-view, .xhs-note, .social-video-link { height: 100%; inset: 0; position: absolute; width: 100%; }
+      .xhs-view[hidden], .xhs-note[hidden], .social-video-link[hidden], .social-text-panel[hidden], .phone-helpers[hidden] { display: none; }
+      .xhs-feed { height: 100%; overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y mandatory; scrollbar-width: none; touch-action: pan-y; }
+      .xhs-feed::-webkit-scrollbar { display: none; }
+      .xhs-shot { height: 100%; overflow: hidden; position: relative; scroll-snap-align: start; }
+      .xhs-shot img, .xhs-note img { display: block; height: 100%; object-fit: fill; pointer-events: none; user-select: none; width: 100%; }
+      .xhs-note-hit { background: transparent; border: 0; cursor: pointer; position: absolute; }
+      .xhs-hit-profile { height: 31%; left: 0; top: 63%; width: 50%; }
+      .xhs-hit-feed-one { height: 42%; left: 0; top: 18%; width: 50%; }
+      .xhs-note-hit:focus-visible, .xhs-back:focus-visible { outline: 3px solid #ff314f; outline-offset: -3px; }
+      .xhs-back { background: transparent; border: 0; cursor: pointer; height: 8%; left: 0; position: absolute; top: 4%; width: 22%; }
+      .phone-helpers { color: rgba(248,248,246,.66); display: grid; font-size: .8rem; gap: 9px; margin: -10px 0 0 18%; text-align: center; width: 64%; }
+      .phone-helpers a, .phone-helpers button { color: #f8f8f6; text-decoration: underline; text-underline-offset: 4px; }
+      .phone-helpers button { background: transparent; border: 0; cursor: pointer; font: inherit; padding: 0; }
+      .social-video-link { cursor: pointer; display: block; overflow: hidden; }
       .social-video-link.is-disabled { cursor: default; }
-      .social-video-link[hidden], .social-text-panel[hidden] { display: none; }
-      .social-video { display: block; height: 540px; object-fit: cover; pointer-events: none; width: 100%; }
-      .social-text-panel { min-height: 540px; padding: 18px; }
+      .social-video { display: block; height: 100%; object-fit: cover; pointer-events: none; width: 100%; }
+      .social-text-panel { height: 100%; min-height: 0; overflow: auto; padding: 18px; }
+
+      @media (max-width: 900px) {
+        #social .social-layout { gap: 36px; grid-template-columns: 1fr; }
+        #social .phone-stage { align-items: center; }
+        #social .phone { margin: 0 auto; }
+      }
 
       @media (max-width: 640px) {
         #social .social-layout { grid-template-columns: 1fr; }
         #social .phone-stage { justify-content: flex-start; }
-        #social .phone { transform: rotate(4deg); }
+        #social .phone { transform: none; }
         #projects #project-panel-little .little-card { padding: 14px 0; }
         .resume-viewer { height: 680px; }
         .resume-lightbox { padding: 16px; }
@@ -657,6 +678,29 @@
           margin-top: 8px;
         }
       }
+
+      /* The existing hero collage becomes one orbital photo field. */
+      header { background: #000; border-bottom-color: rgba(255,255,255,.18); color: #fff; isolation: isolate; }
+      header::before, .hero::before { background: #000; bottom: 0; content: ""; left: calc(50% - 50vw); pointer-events: none; position: absolute; right: calc(50% - 50vw); top: 0; z-index: -1; }
+      header nav a, header nav a:hover, header nav a:focus-visible { color: #fff; }
+      .hero { background: #000; color: #fff; isolation: isolate; }
+      .hero .eyebrow, .hero .hero-index, .hero .hero-index strong, .hero .collage-caption { color: #fff; }
+      .hero .hero-kicker::before { background: #fff; }
+      .photo-collage.cosmic-ready { cursor: pointer; isolation: isolate; }
+      .photo-collage.cosmic-ready .photo { opacity: var(--photo-opacity, 0); pointer-events: none; }
+      .photo-collage .cosmic-canvas { height: 100%; inset: 0; pointer-events: none; position: absolute; width: 100%; z-index: 7; }
+      .photo-collage.cosmic-ready .collage-caption { color: #fff; z-index: 8; }
+      .photo-collage.cosmic-ready:focus-visible { outline: 2px solid var(--warm); outline-offset: 8px; }
+      @media (prefers-reduced-motion: reduce) {
+        .photo-collage.cosmic-ready .photo { opacity: 1 !important; }
+        .photo-collage .cosmic-canvas { display: none; }
+      }
+
+      #about.boat-trail-enabled, #about.boat-trail-enabled * { cursor: none !important; }
+      #about .about-trail-canvas { inset: 0; height: 100%; pointer-events: none; position: absolute; width: 100%; z-index: 6; }
+      .about-boat { display: none; height: 29px; left: 0; pointer-events: none; position: fixed; top: 0; width: 29px; z-index: 19; }
+      body.about-boat-visible .about-boat { display: block; }
+      .about-boat svg { display: block; filter: drop-shadow(0 2px 5px rgba(0,0,0,.35)); height: 100%; width: 100%; }
     </style>
   </head>
   <body>
@@ -750,7 +794,7 @@
             <div class="project-content">
               <div class="project-panel" id="project-panel-knowledge" role="tabpanel">
                 <article class="main-project">
-                  <button class="project-visual project-preview-button" type="button" data-detail="knowledge" data-project-url="https://leeyongjielife-eng.github.io/ai-weekly-digest/" aria-label="Open Knowledge Website"><div class="laptop" aria-hidden="true"><div class="laptop-screen knowledge-browser-screen"><video class="project-site-preview" autoplay muted loop playsinline preload="auto" poster="assets/knowledge-preview-poster.jpg?v=2"><source src="assets/knowledge-preview.mp4?v=2" type="video/mp4" /></video></div></div></button>
+                  <div class="project-visual"><a class="project-site-open" href="https://leeyongjielife-eng.github.io/ai-weekly-digest/" target="_blank" rel="noopener noreferrer">Open the full website ↗</a><div class="laptop"><div class="laptop-screen knowledge-browser-screen"><iframe class="project-site-preview" src="https://leeyongjielife-eng.github.io/ai-weekly-digest/issues/2026-09-14.html" title="Interactive preview of the Knowledge Website"></iframe></div></div></div>
                   <div class="project-meta"><div class="number">01</div><div><h3>Knowledge Website</h3><div class="micro">AI knowledge system · 2026</div><p>AI learning quickly became fragmented across too many formats and sources, so I built a personal knowledge website to collect only the material I want to keep. It works from both the web and terminal, bringing together the pages, interview notes, and technical references I gather each week, organised by topic for fast filtering and focused review.</p></div></div>
                 </article>
               </div>
@@ -785,7 +829,24 @@
 
         <section id="social" aria-labelledby="social-title">
           <div class="social-layout reveal">
-            <div class="phone-stage"><div class="phone" aria-live="polite"><div class="phone-screen"><a class="social-video-link" id="social-video-panel" href="https://www.xiaohongshu.com/user/profile/5b8a3b" target="_blank" rel="noopener noreferrer" aria-label="打开我的小红书主页"><video class="social-video" id="social-video" autoplay muted loop playsinline preload="metadata" poster="assets/xiaohongshu-poster.jpg"><source id="social-video-source" src="assets/xiaohongshu-demo.mp4" type="video/mp4" /></video></a><div class="social-text-panel" id="social-text-panel" hidden><div class="phone-top"><span class="micro">WINGKIT / FEED</span><span class="dot"></span></div><div class="social-preview"><div class="preview-label" id="social-label">Xiaohongshu / Notes</div><h3 id="social-heading">Content<br />to keep.</h3><p id="social-description">点击视频查看我的小红书账号。</p><div class="preview-lines"><div id="social-line-1">AI learning notes</div><div id="social-line-2">Workflow experiments</div><div id="social-line-3">Project retrospectives</div></div><span class="social-open" id="social-open">View profile ↗</span></div></div></div></div></div>
+            <div class="phone-stage">
+              <div class="phone" aria-live="polite">
+                <div class="phone-screen">
+                  <div class="xhs-view" id="xhs-view">
+                    <div class="xhs-feed" id="xhs-feed" role="region" aria-label="小红书主页截图，向下滚动浏览笔记">
+                      <div class="xhs-shot"><img src="assets/xhs-profile-top.png" alt="Wren呼叫机的小红书主页与置顶笔记" /><button class="xhs-note-hit xhs-hit-profile" type="button" data-xhs-note="project" aria-label="打开笔记：项目失败后写了一套 Harness 提示词"></button></div>
+                      <div class="xhs-shot"><img src="assets/xhs-profile-feed-1.png" alt="小红书主页中的 AI 与 Agent 笔记" loading="lazy" /><button class="xhs-note-hit xhs-hit-feed-one" type="button" data-xhs-note="agent" aria-label="打开 Agent 主题笔记"></button></div>
+                      <div class="xhs-shot"><img src="assets/xhs-profile-feed-2.png" alt="小红书主页中的 AI 周刊与模型笔记" loading="lazy" /></div>
+                    </div>
+                    <div class="xhs-note" id="xhs-note" hidden><img id="xhs-note-image" src="assets/xhs-note-project.png" alt="" /><button class="xhs-back" id="xhs-back" type="button" aria-label="返回小红书主页"></button></div>
+                  </div>
+                  <a class="social-video-link" id="social-video-panel" href="https://www.linkedin.com/in/yongjie-li-525488303/" target="_blank" rel="noopener noreferrer" aria-label="打开我的 LinkedIn 主页" hidden><video class="social-video" id="social-video" autoplay muted loop playsinline preload="metadata" poster="assets/linkedin-poster.jpg"><source id="social-video-source" src="assets/linkedin-demo.mp4" type="video/mp4" /></video></a>
+                  <div class="social-text-panel" id="social-text-panel" hidden><div class="phone-top"><span class="micro">WINGKIT / FEED</span><span class="dot"></span></div><div class="social-preview"><div class="preview-label" id="social-label">Xiaohongshu / Notes</div><h3 id="social-heading">Content<br />to keep.</h3><p id="social-description">点击屏幕中的笔记查看详情。</p><div class="preview-lines"><div id="social-line-1">AI learning notes</div><div id="social-line-2">Workflow experiments</div><div id="social-line-3">Project retrospectives</div></div><span class="social-open" id="social-open">View profile ↗</span></div></div>
+                </div>
+                <img class="phone-frame" src="assets/xhs-phone-frame.png" alt="" aria-hidden="true" />
+              </div>
+              <div class="phone-helpers" id="phone-helpers"><span>在手机里滑动，点击笔记查看</span><button type="button" data-xhs-note="harness">另看笔记：换模型，不如换 Harness ↗</button><a href="https://www.xiaohongshu.com/user/profile/5b8a3b728323440001b85aa9" target="_blank" rel="noopener noreferrer">打开小红书主页 ↗</a></div>
+            </div>
             <div class="social-copy"><div class="eyebrow">03 / Social Platform</div><h2 id="social-title">What I <span class="serif">share.</span></h2><p>除此之外，我也会在社交平台上面去分享相关的知识和内容。</p><div class="platform-list" role="tablist" aria-label="Social platforms"><button class="platform-button" role="tab" aria-selected="true" data-platform="xiaohongshu"><span>Xiaohongshu</span></button><button class="platform-button" role="tab" aria-selected="false" data-platform="linkedin"><span>LinkedIn</span></button><button class="platform-button" role="tab" aria-selected="false" data-platform="wechat"><span>WeChat Official Account</span></button></div><div class="platform-account"><div class="eyebrow" id="social-account-label">Xiaohongshu / July—August 2026</div><p id="social-account-description">I started this account in July 2026 to share practical AI learning notes and useful discoveries. Across July and August, I published approximately 27 visual posts, earning around 470 likes and 16,000 views. I paused posting as my job search and other priorities began to require more of my time.</p></div></div>
           </div>
         </section>
@@ -917,12 +978,11 @@
       }));
 
       const socialContent = {
-        xiaohongshu: ['Xiaohongshu / Notes', 'Latest\nfeed.', 'Click the video to visit my Xiaohongshu profile.', 'AI learning notes', 'Useful discoveries', 'Visual explainers', 'Xiaohongshu / July—August 2026', 'I started this account in July 2026 to share practical AI learning notes and useful discoveries. Across July and August, I published approximately 27 visual posts, earning around 470 likes and 16,000 views. I paused posting as my job search and other priorities began to require more of my time.'],
+        xiaohongshu: ['Xiaohongshu / Notes', 'Latest\nfeed.', 'Browse screenshots of my notes and open a few examples.', 'AI learning notes', 'Useful discoveries', 'Visual explainers', 'Xiaohongshu / July—August 2026', 'I started this account in July 2026 to share practical AI learning notes and useful discoveries. Across July and August, I published approximately 27 visual posts, earning around 470 likes and 16,000 views. I paused posting as my job search and other priorities began to require more of my time.'],
         linkedin: ['LinkedIn / Work notes', 'Work in\npublic.', 'Click the video to visit my LinkedIn profile.', 'AI knowledge', 'Useful concepts', 'Learning notes', 'LinkedIn / Occasional AI Notes', 'I update LinkedIn only occasionally, using it mainly to share concise AI knowledge, useful concepts, and selected notes from what I am learning and building.'],
         wechat: ['WeChat / Archive', 'Ideas\nwith a trail.', 'A video preview of my WeChat Official Account.', 'Automotive insights', 'Vertical content', 'Channel operations', 'WeChat / Automotive Content · Since 14 September 2026', 'I launched this WeChat Official Account on 14 September 2026 and have published only a few articles so far. Each has reached around 100 reads. By focusing on a clear automotive niche and achieving consistent early readership, the account shows my ability to position, produce, and operate a vertical content channel from zero.']
       };
       const socialVideos = {
-        xiaohongshu: { src: 'assets/xiaohongshu-demo.mp4', poster: 'assets/xiaohongshu-poster.jpg', href: 'https://www.xiaohongshu.com/user/profile/5b8a3b', label: '打开我的小红书主页' },
         linkedin: { src: 'assets/linkedin-demo.mp4', poster: 'assets/linkedin-poster.jpg', href: 'https://www.linkedin.com/in/yongjie-li-525488303/', label: '打开我的 LinkedIn 主页' },
         wechat: { src: 'assets/wechat-demo.mp4', poster: 'assets/wechat-poster.jpg', href: '', label: '微信公众号视频预览' }
       };
@@ -930,12 +990,44 @@
       const socialTextPanel = document.querySelector('#social-text-panel');
       const socialVideo = document.querySelector('#social-video');
       const socialVideoSource = document.querySelector('#social-video-source');
+      const xhsView = document.querySelector('#xhs-view');
+      const xhsNote = document.querySelector('#xhs-note');
+      const xhsNoteImage = document.querySelector('#xhs-note-image');
+      const phoneHelpers = document.querySelector('#phone-helpers');
+      const xhsNotes = {
+        project: { src: 'assets/xhs-note-project.png', alt: '项目失败后写了一套 Harness 提示词的笔记截图' },
+        agent: { src: 'assets/xhs-note-agent.png', alt: '多数 AI 任务根本不需要 Agent 的笔记截图' },
+        harness: { src: 'assets/xhs-note-harness.png', alt: '换模型，不如换 Harness 的笔记截图' }
+      };
+      let xhsLastTrigger = null;
+      document.querySelectorAll('[data-xhs-note]').forEach((button) => button.addEventListener('click', () => {
+        const note = xhsNotes[button.dataset.xhsNote];
+        if (!note) return;
+        xhsLastTrigger = button;
+        xhsNoteImage.src = note.src;
+        xhsNoteImage.alt = note.alt;
+        xhsNote.hidden = false;
+        if (!button.closest('.phone')) document.querySelector('#social .phone').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelector('#xhs-back').focus({ preventScroll: true });
+      }));
+      const closeXhsNote = () => {
+        xhsNote.hidden = true;
+        if (xhsLastTrigger) xhsLastTrigger.focus({ preventScroll: true });
+      };
+      document.querySelector('#xhs-back').addEventListener('click', closeXhsNote);
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !xhsNote.hidden) closeXhsNote();
+      });
       document.querySelectorAll('[data-platform]').forEach((button) => button.addEventListener('click', () => {
         document.querySelectorAll('[data-platform]').forEach((item) => item.setAttribute('aria-selected', item === button ? 'true' : 'false'));
+        const isXiaohongshu = button.dataset.platform === 'xiaohongshu';
         const videoContent = socialVideos[button.dataset.platform];
         const showsVideo = Boolean(videoContent);
+        xhsView.hidden = !isXiaohongshu;
+        phoneHelpers.hidden = !isXiaohongshu;
+        xhsNote.hidden = true;
         socialVideoPanel.hidden = !showsVideo;
-        socialTextPanel.hidden = showsVideo;
+        socialTextPanel.hidden = isXiaohongshu || showsVideo;
         if (showsVideo) {
           if (socialVideoSource.getAttribute('src') !== videoContent.src) {
             socialVideo.pause();
@@ -970,13 +1062,6 @@
         document.querySelector('#social-account-label').textContent = content[6];
         document.querySelector('#social-account-description').textContent = content[7];
       }));
-
-      const knowledgePreview = document.querySelector('.project-site-preview');
-      if (knowledgePreview) {
-        knowledgePreview.muted = true;
-        const playback = knowledgePreview.play();
-        if (playback) playback.catch(() => {});
-      }
 
       const makeCollageInteractive = (selector, angles) => {
         const photos = [...document.querySelectorAll(selector)];
@@ -1087,6 +1172,347 @@
 
       const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }), { threshold: .12 });
       document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+
+      (() => {
+        const collage = document.querySelector('.photo-collage');
+        const photos = [...collage.querySelectorAll('.photo')];
+        const images = photos.map((photo) => photo.querySelector('img'));
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const canvas = document.createElement('canvas');
+        canvas.className = 'cosmic-canvas';
+        canvas.setAttribute('aria-hidden', 'true');
+        const ctx = canvas.getContext('2d', { alpha: true });
+        if (!ctx) return;
+
+        const duration = 3;
+        const photoDelay = .25;
+        const photoDuration = duration - photoDelay * (photos.length - 1);
+        const turns = [-5, -4, 2, 5, 3, -1].map((angle) => angle * Math.PI / 180);
+        const tau = Math.PI * 2;
+        const clamp = (value) => Math.max(0, Math.min(1, value));
+        const ease = (value) => value * value * (3 - 2 * value);
+        let particles = [];
+        let width = 0;
+        let height = 0;
+        let progress = 0;
+        let destination = 0;
+        let orbitTime = 0;
+        let lastFrame = 0;
+        let frame = 0;
+        let inView = false;
+        let ready = false;
+
+        const makeParticles = () => {
+          particles = [];
+          photos.forEach((photo, photoIndex) => {
+            const image = images[photoIndex];
+            const w = photo.offsetWidth;
+            const h = photo.offsetHeight;
+            const columns = Math.max(18, Math.min(36, Math.round(w / 7.5)));
+            const rows = Math.max(20, Math.min(46, Math.round(h / 7.5)));
+            const scale = Math.max(w / image.naturalWidth, h / image.naturalHeight);
+            const sourceWidth = w / scale;
+            const sourceHeight = h / scale;
+            const sourceX = (image.naturalWidth - sourceWidth) / 2;
+            const sourceY = (image.naturalHeight - sourceHeight) / 2;
+            // Clip image samples once, so every animated fragment stays circular.
+            const spriteSize = 8;
+            const atlas = document.createElement('canvas');
+            atlas.width = columns * spriteSize;
+            atlas.height = rows * spriteSize;
+            const atlasCtx = atlas.getContext('2d');
+            for (let row = 0; row < rows; row++) {
+              for (let col = 0; col < columns; col++) {
+                atlasCtx.save();
+                atlasCtx.beginPath();
+                atlasCtx.arc((col + .5) * spriteSize, (row + .5) * spriteSize, spriteSize / 2 - .5, 0, tau);
+                atlasCtx.clip();
+                atlasCtx.drawImage(image, sourceX + col * sourceWidth / columns, sourceY + row * sourceHeight / rows, sourceWidth / columns, sourceHeight / rows, col * spriteSize, row * spriteSize, spriteSize, spriteSize);
+                atlasCtx.restore();
+                const id = particles.length;
+                const random = Math.sin((id + 1) * 12.9898) * 43758.5453;
+                const seeded = random - Math.floor(random);
+                particles.push({
+                  image: atlas, photoIndex, angle: turns[photoIndex],
+                  localX: (col + .5) * w / columns - w / 2,
+                  localY: (row + .5) * h / rows - h / 2,
+                  centerX: photo.offsetLeft + w / 2,
+                  centerY: photo.offsetTop + h / 2,
+                  sourceX: col * spriteSize,
+                  sourceY: row * spriteSize,
+                  sourceW: spriteSize,
+                  sourceH: spriteSize,
+                  dotSize: 1.8 + seeded * .8,
+                  phase: (id * 2.39996323 + photoIndex * .51) % tau,
+                  radius: .06 + .93 * Math.pow(seeded, 1.3),
+                  orbitSpeed: .7 + seeded * .45,
+                  twinkle: seeded * tau,
+                  drift: (seeded - .5) * 14,
+                  starColor: seeded > .82 ? '#ffe4ca' : seeded > .3 ? '#e6edff' : '#9fb6ec'
+                });
+              }
+            }
+          });
+        };
+
+        const resize = () => {
+          if (!ready) return;
+          width = collage.clientWidth;
+          height = collage.clientHeight;
+          if (!width || !height) return;
+          const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+          canvas.width = Math.round(width * pixelRatio);
+          canvas.height = Math.round(height * pixelRatio);
+          ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+          makeParticles();
+          draw();
+        };
+
+        const draw = () => {
+          ctx.clearRect(0, 0, width, height);
+          particles.forEach((particle) => {
+            const start = particle.photoIndex * photoDelay;
+            const local = ease(clamp((progress * duration - start) / photoDuration));
+            const angle = particle.phase + orbitTime * particle.orbitSpeed;
+            const ringX = Math.cos(angle) * particle.radius * width * .55;
+            const ringY = Math.sin(angle) * particle.radius * height * .24;
+            const starX = width * .5 + ringX * .98 + ringY * .2 + Math.cos(angle * 2) * particle.drift;
+            const starY = height * .49 - ringX * .2 + ringY * .98 + Math.sin(angle * 2) * particle.drift;
+            const targetX = particle.centerX + particle.localX * Math.cos(particle.angle) - particle.localY * Math.sin(particle.angle);
+            const targetY = particle.centerY + particle.localX * Math.sin(particle.angle) + particle.localY * Math.cos(particle.angle);
+            const x = starX + (targetX - starX) * local;
+            const y = starY + (targetY - starY) * local;
+            const starSize = .8 + .6 * (.5 + .5 * Math.sin(orbitTime * 1.5 + particle.twinkle));
+            const dotSize = starSize + (particle.dotSize - starSize) * local;
+            const photoOpacity = ease(clamp((local - .82) / .18));
+            if (photoOpacity > .995) return;
+            if (local < .95) {
+              ctx.globalAlpha = (1 - local) * (.5 + .5 * Math.sin(orbitTime * 1.3 + particle.twinkle) ** 2);
+              ctx.fillStyle = particle.starColor;
+              ctx.beginPath();
+              ctx.arc(x, y, starSize / 2, 0, tau);
+              ctx.fill();
+            }
+            if (local < .04) return;
+            ctx.globalAlpha = (1 - photoOpacity) * local;
+            ctx.drawImage(particle.image, particle.sourceX, particle.sourceY, particle.sourceW, particle.sourceH, x - dotSize / 2, y - dotSize / 2, dotSize, dotSize);
+          });
+          ctx.globalAlpha = 1;
+          photos.forEach((photo, index) => {
+            const local = ease(clamp((progress * duration - index * photoDelay) / photoDuration));
+            photo.style.setProperty('--photo-opacity', ease(clamp((local - .82) / .18)).toFixed(3));
+          });
+        };
+
+        const tick = (time) => {
+          const delta = lastFrame ? Math.min((time - lastFrame) / 1000, .05) : 0;
+          lastFrame = time;
+          orbitTime += delta * .12;
+          progress = clamp(progress + Math.sign(destination - progress) * Math.min(Math.abs(destination - progress), delta / duration));
+          draw();
+          frame = inView && !reducedMotion.matches ? requestAnimationFrame(tick) : 0;
+        };
+        const start = () => {
+          if (frame || !inView || reducedMotion.matches || !ready) return;
+          lastFrame = 0;
+          frame = requestAnimationFrame(tick);
+        };
+        const setGathered = (gathered) => {
+          if (reducedMotion.matches || !ready) return;
+          destination = gathered ? 1 : 0;
+          collage.setAttribute('aria-pressed', String(gathered));
+          collage.setAttribute('aria-label', gathered ? 'Photos forming from an orbit of particles; activate to scatter them' : 'Orbiting photo particles; activate to form the photos');
+          start();
+        };
+        const syncMotionPreference = () => {
+          if (reducedMotion.matches) {
+            if (frame) cancelAnimationFrame(frame);
+            frame = 0;
+            collage.classList.remove('cosmic-ready');
+            collage.removeAttribute('role');
+            collage.removeAttribute('tabindex');
+            collage.removeAttribute('aria-pressed');
+            collage.setAttribute('aria-label', 'Personal photo collage');
+          } else {
+            collage.classList.add('cosmic-ready');
+            collage.setAttribute('role', 'button');
+            collage.setAttribute('tabindex', '0');
+            if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && collage.matches(':hover')) setGathered(true);
+            else setGathered(destination === 1);
+            start();
+          }
+        };
+        collage.addEventListener('pointerenter', (event) => {
+          if (event.pointerType === 'mouse' || event.pointerType === 'pen') setGathered(true);
+        });
+        collage.addEventListener('pointerleave', (event) => {
+          if (event.pointerType === 'mouse' || event.pointerType === 'pen') setGathered(false);
+        });
+        collage.addEventListener('click', (event) => {
+          if (event.pointerType === 'mouse' || event.pointerType === 'pen') return;
+          setGathered(destination === 0);
+        });
+        collage.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          setGathered(destination === 0);
+        });
+
+        const visibility = new IntersectionObserver(([entry]) => {
+          inView = entry.isIntersecting;
+          if (inView) start();
+          else if (frame) { cancelAnimationFrame(frame); frame = 0; }
+        }, { threshold: .01 });
+        reducedMotion.addEventListener('change', syncMotionPreference);
+
+        Promise.all(images.map((image) => {
+          if (image.complete && image.naturalWidth) return Promise.resolve();
+          if (image.decode) return image.decode();
+          return new Promise((resolve, reject) => {
+            image.addEventListener('load', resolve, { once: true });
+            image.addEventListener('error', reject, { once: true });
+          });
+        })).then(() => {
+          collage.appendChild(canvas);
+          ready = true;
+          resize();
+          syncMotionPreference();
+          new ResizeObserver(resize).observe(collage);
+          visibility.observe(collage);
+        }).catch(() => { /* Leave the original photographs visible if an image cannot load. */ });
+      })();
+
+      (() => {
+        const about = document.querySelector('#about');
+        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const canvas = document.createElement('canvas');
+        canvas.className = 'about-trail-canvas';
+        canvas.setAttribute('aria-hidden', 'true');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        const boat = document.createElement('div');
+        boat.className = 'about-boat';
+        boat.setAttribute('aria-hidden', 'true');
+        boat.innerHTML = `<svg viewBox="0 0 72 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M7 29 36 34 65 29 54 51c-11 4-25 5-36 0L7 29Z" fill="#eef3f5" stroke="#c8d2d7" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M7 29 36 34 20 48 7 29Z" fill="#dbe5e9" stroke="#b4c2c9" stroke-width="1.3" stroke-linejoin="round"/>
+          <path d="m65 29-29 5 16 14 13-19Z" fill="#f6f8f8" stroke="#b4c2c9" stroke-width="1.3" stroke-linejoin="round"/>
+          <path d="M36 34 36 9 47 30 36 34Z" fill="#e4ecef" stroke="#b4c2c9" stroke-width="1.35" stroke-linejoin="round"/>
+          <path d="M36 9 25 30 36 34V9Z" fill="#cbd8de" stroke="#aabac2" stroke-width="1.35" stroke-linejoin="round"/>
+          <path d="M20 48c10 3 22 3 32 0" fill="none" stroke="#aabac2" stroke-width="1.15" stroke-linecap="round"/>
+          <path d="M25 30 36 34 47 30" fill="none" stroke="#aabac2" stroke-width="1.1" stroke-linecap="round"/>
+        </svg>`;
+        about.appendChild(canvas);
+        document.body.appendChild(boat);
+
+        const colors = ['#fff4aa', '#ffd05b', '#91e7ff', '#baacff', '#ff9fab', '#ffffff'];
+        const particles = [];
+        let lastPoint = null;
+        let lastEmission = null;
+        let frame = 0;
+        let width = 0;
+        let height = 0;
+        const enabled = () => finePointer.matches && !reducedMotion.matches;
+
+        const resize = () => {
+          width = about.offsetWidth;
+          height = about.offsetHeight;
+          const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+          canvas.width = Math.round(width * ratio);
+          canvas.height = Math.round(height * ratio);
+          ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        };
+        const star = (particle, age) => {
+          const fade = Math.max(0, 1 - age / particle.life);
+          const x = particle.x + particle.vx * age / 1000;
+          const y = particle.y + particle.vy * age / 1000;
+          const size = particle.size * (.55 + .45 * fade);
+          const points = particle.points;
+          ctx.beginPath();
+          for (let corner = 0; corner < points * 2; corner++) {
+            const angle = corner * Math.PI / points + particle.rotation + age * .00025;
+            const radius = corner % 2 ? size * (points === 4 ? .22 : .42) : size;
+            const px = x + Math.cos(angle) * radius;
+            const py = y + Math.sin(angle) * radius;
+            if (corner === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.globalAlpha = fade * .92;
+          ctx.fillStyle = particle.color;
+          ctx.fill();
+        };
+        const animate = (time) => {
+          ctx.clearRect(0, 0, width, height);
+          for (let index = particles.length - 1; index >= 0; index--) {
+            const age = time - particles[index].born;
+            if (age >= particles[index].life) particles.splice(index, 1);
+            else star(particles[index], age);
+          }
+          ctx.globalAlpha = 1;
+          frame = particles.length ? requestAnimationFrame(animate) : 0;
+        };
+        const addStar = (x, y, time, emphasis) => {
+          const random = Math.random();
+          particles.push({
+            x: x + (Math.random() - .5) * 24,
+            y: y + (Math.random() - .5) * 24,
+            vx: (Math.random() - .5) * 18,
+            vy: (Math.random() - .5) * 18,
+            size: (emphasis ? 7 + random * 8 : 1.8 + random * 4) * (2 / 3),
+            points: random > .45 ? 4 : 5,
+            rotation: random * Math.PI,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            born: time,
+            life: 1250 + Math.random() * 850
+          });
+          if (particles.length > 450) particles.splice(0, particles.length - 450);
+          if (!frame) frame = requestAnimationFrame(animate);
+        };
+        const hideBoat = () => {
+          document.body.classList.remove('about-boat-visible');
+          lastPoint = null;
+          lastEmission = null;
+        };
+        const syncPreference = () => {
+          about.classList.toggle('boat-trail-enabled', enabled());
+          if (!enabled()) {
+            hideBoat();
+            particles.length = 0;
+            if (frame) cancelAnimationFrame(frame);
+            frame = 0;
+            ctx.clearRect(0, 0, width, height);
+          }
+        };
+        about.addEventListener('pointermove', (event) => {
+          if (!enabled() || event.pointerType !== 'mouse') return;
+          const bounds = about.getBoundingClientRect();
+          const point = { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+          document.body.classList.add('about-boat-visible');
+          const dx = lastPoint ? point.x - lastPoint.x : 0;
+          boat.style.transform = `translate3d(${event.clientX - 14.5}px, ${event.clientY - 16}px, 0) rotate(${Math.max(-14, Math.min(14, dx * .8))}deg)`;
+          if (lastEmission) {
+            const trailX = point.x - lastEmission.x;
+            const trailY = point.y - lastEmission.y;
+            const distance = Math.hypot(trailX, trailY);
+            const count = Math.min(32, Math.floor(distance / 7));
+            for (let index = 1; index <= count; index++) {
+              const fraction = index / count;
+              addStar(lastEmission.x + trailX * fraction, lastEmission.y + trailY * fraction, performance.now(), Math.random() < .11);
+            }
+            if (count) lastEmission = point;
+          }
+          else lastEmission = point;
+          lastPoint = point;
+        }, { passive: true });
+        about.addEventListener('pointerleave', hideBoat);
+        finePointer.addEventListener('change', syncPreference);
+        reducedMotion.addEventListener('change', syncPreference);
+        new ResizeObserver(resize).observe(about);
+        resize();
+        syncPreference();
+      })();
     </script>
   </body>
 </html>
